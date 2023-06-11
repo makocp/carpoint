@@ -31,9 +31,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 class RegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +61,16 @@ fun displayLogo() {
 }
 
 @Composable
+fun addTitle(@StringRes text: Int, fontSize : Int) {
+    MaterialTheme {
+        Text(
+            text = stringResource(id = text),
+            modifier = Modifier,
+            style = TextStyle(fontSize = fontSize.sp))
+    }
+}
+
+@Composable
 fun createButton(@StringRes placeholderResId: Int) {
 
     MaterialTheme() {
@@ -65,10 +78,10 @@ fun createButton(@StringRes placeholderResId: Int) {
             onClick = { /*TODO*/ },
             colors = ButtonDefaults.buttonColors(Color(0xFF1e88c1)),
             modifier = Modifier
-                .padding( 50.dp),
+                .padding(50.dp),
 
             ) {
-        Text(text = stringResource(id = placeholderResId))
+            Text(text = stringResource(id = placeholderResId))
         }
     }
 }
@@ -101,6 +114,7 @@ fun registerActivityPreview() {
             .background(Color.White)
     ) {
         displayLogo()
+        addTitle(text = R.string.createAccount,30)
         createTextField(R.string.Username)
         createTextField(R.string.email)
         createTextField(R.string.password)
