@@ -13,4 +13,6 @@
     <string name="dontHaveAccount">don\'t have an Account yet?</string>
     <string name="enterYourEmail">Please enter your E-mail</string>
     <string name="resetPassword">Reset Password</string>
+    <string name="enterNewPassword">Enter your new Password</string>
+    <string name="confirmNewPassword">Confirm your new Password</string>
 </resources>
