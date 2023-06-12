@@ -20,7 +20,18 @@ class ForgotPassword : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContent(){
-
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White)
+            ){
+                addText(text = R.string.enterNewPassword, fontsize = 25, color = Color.Black)
+                createPasswordField(placeholderResId = R.string.enterNewPassword, leadingIcon = Icons.Default.Edit)
+                createPasswordField(placeholderResId = R.string.confirmNewPassword, leadingIcon = Icons.Default.Check)
+                createButton(placeholderResId = R.string.resetPassword)
+            }
         }
     }
 }
@@ -36,8 +47,8 @@ fun ForgotPasswordPreview(){
             .background(Color.White)
     ){
         addText(text = R.string.enterNewPassword, fontsize = 25, color = Color.Black)
-        createTextField(placeholderResId = R.string.enterNewPassword, leadingIcon = Icons.Default.Edit)
-        createTextField(placeholderResId = R.string.confirmNewPassword, leadingIcon = Icons.Default.Check)
+        createPasswordField(placeholderResId = R.string.enterNewPassword, leadingIcon = Icons.Default.Edit)
+        createPasswordField(placeholderResId = R.string.confirmNewPassword, leadingIcon = Icons.Default.Check)
         createButton(placeholderResId = R.string.resetPassword)
     }
 }

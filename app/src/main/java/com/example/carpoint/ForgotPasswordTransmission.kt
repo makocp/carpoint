@@ -27,7 +27,7 @@ class ForgotPasswordTransmission : ComponentActivity() {
             ){
                 displayLogo()
                 createTextField(placeholderResId = R.string.enterYourEmail, leadingIcon = Icons.Default.Email)
-                createButton(placeholderResId = R.string.resetPassword)
+                createButton(placeholderResId = R.string.submit)
 
             }
         }

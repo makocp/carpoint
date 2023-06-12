@@ -33,8 +33,8 @@ class RegisterActivity : ComponentActivity() {
                 displayLogo()
                 createTextField(R.string.Username, Icons.Default.Create)
                 createTextField(R.string.email, Icons.Default.Email)
-                createTextField(R.string.password, Icons.Default.Lock)
-                createTextField(R.string.confirmPassword, Icons.Default.Lock)
+                createPasswordField(R.string.password, Icons.Default.Lock)
+                createPasswordField(R.string.confirmPassword, Icons.Default.Lock)
                 createButton(placeholderResId = R.string.createAccount)
                 addDivider(30)
                 Row {
@@ -59,8 +59,8 @@ fun registerActivityPreview() {
         displayLogo()
         createTextField(R.string.Username, Icons.Default.Create)
         createTextField(R.string.email, Icons.Default.Email)
-        createTextField(R.string.password, Icons.Default.Lock)
-        createTextField(R.string.confirmPassword, Icons.Default.Lock)
+        createPasswordField(R.string.password, Icons.Default.Lock)
+        createPasswordField(R.string.confirmPassword, Icons.Default.Lock)
         createButton(placeholderResId = R.string.createAccount)
         addDivider(30)
         Row {
