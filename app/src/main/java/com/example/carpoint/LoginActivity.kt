@@ -76,7 +76,7 @@ class LoginActivity : ComponentActivity() {
             ) {
                 displayLogo()
                 createTextField(placeholderResId = R.string.email, leadingIcon = Icons.Default.Email)
-                createTextField(placeholderResId = R.string.password, leadingIcon = Icons.Default.Lock)
+                createPasswordField(placeholderResId = R.string.password, leadingIcon = Icons.Default.Lock)
                 createButton(placeholderResId = R.string.logIn)
                 addDivider(padding = 30)
                 Row {
