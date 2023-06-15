@@ -1,6 +1,7 @@
 package com.example.carpoint
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -20,48 +21,33 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.carpoint.Dashboard.DashboardScreen
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.carpoint.Screens.Dashboard.BottomBarNavigation.BottomNavObject
+import com.example.carpoint.Screens.Dashboard.DashboardScreen
+import com.example.carpoint.Screens.Dashboard.HomeScreen
+import com.example.carpoint.Screens.LogIn.LogInScreen
+import com.example.carpoint.Screens.ResetPassword.ResetPassword
+import com.example.carpoint.Screens.ResetPassword.ResetPasswordTransmission
+import com.example.carpoint.Screens.SignUp.SignUpScreen
 import com.example.carpoint.ui.theme.CarPointTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3Api::class)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CarPointTheme {
-                Surface(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    DashboardScreen()
-                }
-            }
-        }
-    }
-}
+            val navController = rememberNavController()
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CarPointTheme {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White)
-        ) {
-            displayLogo()
-            createTextField(R.string.Username, Icons.Default.Create)
-            createTextField(R.string.email, Icons.Default.Email)
-            createPasswordField(R.string.password, Icons.Default.Lock)
-            createPasswordField(R.string.confirmPassword, Icons.Default.Lock)
-            createButton(placeholderResId = R.string.createAccount)
-            addDivider(30)
-            Row {
-                addText(text = R.string.alreadyHaveAccount, fontsize = 15, Color.Gray)
-                addClickableText(text = R.string.logIn, fontsize = 15, color = Color(0xFF1e88c1))
+            NavHost(navController = navController, startDestination = "login") {
+                composable("login") { LogInScreen(navController) }
+                composable("signup") { SignUpScreen(navController) }
+                composable("resetpasswordTransmission") {ResetPasswordTransmission(navController)}
+                composable("resetpassword"){ResetPassword(navController)}
+                composable("dashboard") { DashboardScreen() }
             }
         }
     }

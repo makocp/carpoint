@@ -68,15 +68,14 @@ fun displayLogo() {
 
 
 @Composable
-fun createButton(@StringRes placeholderResId: Int) {
+fun createButton(@StringRes placeholderResId: Int, onClick: () -> Unit) {
 
     MaterialTheme() {
         Button(
-            onClick = { /*TODO*/ },
+            onClick = onClick ,
             colors = ButtonDefaults.buttonColors(Color(0xFF1e88c1)),
             modifier = Modifier
                 .padding(50.dp),
-
             ) {
             Text(text = stringResource(id = placeholderResId))
         }
@@ -155,12 +154,12 @@ fun addText(@StringRes text: Int, fontsize: Int, color: Color) {
 }
 
 @Composable
-fun addClickableText(@StringRes text: Int, fontsize: Int, color: Color) {
+fun addClickableText(@StringRes text: Int, fontsize: Int, color: Color, onClick: (Int) -> Unit) {
     ClickableText(
         text = AnnotatedString(stringResource(text)),
         style = TextStyle(color = color, fontSize = fontsize.sp),
         modifier = Modifier
             .padding(start = 4.dp),
-        onClick = { /*TODO*/ }
+        onClick = onClick
     )
 }

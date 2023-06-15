@@ -1,4 +1,4 @@
-package com.example.carpoint
+package com.example.carpoint.Screens.ResetPassword
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,30 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import com.example.carpoint.R
+import com.example.carpoint.addText
+import com.example.carpoint.createButton
+import com.example.carpoint.createPasswordField
 
-class ForgotPassword : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?){
-        super.onCreate(savedInstanceState)
-        setContent(){
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.White)
-            ){
-                addText(text = R.string.enterNewPassword, fontsize = 25, color = Color.Black)
-                createPasswordField(placeholderResId = R.string.enterNewPassword, leadingIcon = Icons.Default.Edit)
-                createPasswordField(placeholderResId = R.string.confirmNewPassword, leadingIcon = Icons.Default.Check)
-                createButton(placeholderResId = R.string.resetPassword)
-            }
-        }
-    }
-}
-
-@Preview
 @Composable
-fun ForgotPasswordPreview(){
+fun ResetPassword(navController : NavController){
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -49,6 +33,7 @@ fun ForgotPasswordPreview(){
         addText(text = R.string.enterNewPassword, fontsize = 25, color = Color.Black)
         createPasswordField(placeholderResId = R.string.enterNewPassword, leadingIcon = Icons.Default.Edit)
         createPasswordField(placeholderResId = R.string.confirmNewPassword, leadingIcon = Icons.Default.Check)
-        createButton(placeholderResId = R.string.resetPassword)
+        createButton(placeholderResId = R.string.resetPassword,{navController.popBackStack()})
     }
 }
+
