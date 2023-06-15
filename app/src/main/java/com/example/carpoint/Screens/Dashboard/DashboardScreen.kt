@@ -1,4 +1,4 @@
-package com.example.carpoint.Dashboard
+package com.example.carpoint.Screens.Dashboard
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.RowScope
@@ -17,8 +17,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.carpoint.BottomBarNavigation.BottomNavGraph
-import com.example.carpoint.BottomBarNavigation.BottomNavObject
+import com.example.carpoint.Screens.Dashboard.BottomBarNavigation.BottomNavGraph
+import com.example.carpoint.Screens.Dashboard.BottomBarNavigation.BottomNavObject
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

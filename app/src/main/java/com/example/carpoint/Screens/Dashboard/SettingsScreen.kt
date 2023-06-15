@@ -1,4 +1,4 @@
-package com.example.carpoint.Dashboard
+package com.example.carpoint.Screens.Dashboard
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,16 +13,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ProfileScreen() {
+fun SettingsScreen(){
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Green),
+            .background(Color.Yellow),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Profile",
+            text = "Settings",
             fontSize = 100.sp,
             fontWeight = FontWeight.Bold
         )
