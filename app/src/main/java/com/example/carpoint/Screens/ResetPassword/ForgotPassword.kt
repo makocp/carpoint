@@ -33,7 +33,7 @@ fun ResetPassword(navController : NavController){
         addText(text = R.string.enterNewPassword, fontsize = 25, color = Color.Black)
         createPasswordField(placeholderResId = R.string.enterNewPassword, leadingIcon = Icons.Default.Edit)
         createPasswordField(placeholderResId = R.string.confirmNewPassword, leadingIcon = Icons.Default.Check)
-        createButton(placeholderResId = R.string.resetPassword,{navController.popBackStack()})
+        createButton(placeholderResId = R.string.resetPassword,{    navController.popBackStack(navController.graph.startDestinationId, false) })
     }
 }
 
