@@ -1,5 +1,6 @@
-package com.example.carpoint.Screens.LogIn
+package com.example.carpoint.Screens.SignUp
 
+import com.example.carpoint.Screens.LogIn.LogInState
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,24 +13,24 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LogInViewModel @Inject constructor(
+class SignUpViewModel @Inject constructor(
     private val auth : IAuthentication
 ) : ViewModel() {
-    val _logInState = Channel<LogInState>()
-    val logInState = _logInState.receiveAsFlow()
-
-    fun loginUser(email: String, password: String) = viewModelScope.launch {
-        auth.loginUser(email, password).collect { result ->
+    val _signUpState = Channel<SignUpState>()
+    val signUpState = _signUpState.receiveAsFlow()
+    val auth0 = auth
+    fun createUser(email: String, password: String) = viewModelScope.launch {
+        auth.createUser(email, password).collect { result ->
             when (result) {
                 is Resource.success -> {
-                    _logInState.send(LogInState(isSuccess = "Sign In Success "))
+                    _signUpState.send(SignUpState(isSuccess = "Sign In Success "))
                 }
                 is Resource.loading -> {
-                    _logInState.send(LogInState(isLoading = true))
+                    _signUpState.send(SignUpState(isLoading = true))
 
                 }
                 is Resource.error -> {
-                    _logInState.send(LogInState(isError = result.message))
+                    _signUpState.send(SignUpState(isError = result.message))
                 }
             }
         }

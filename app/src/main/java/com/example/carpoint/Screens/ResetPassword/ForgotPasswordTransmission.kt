@@ -6,18 +6,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.example.carpoint.R
-import com.example.carpoint.createButton
-import com.example.carpoint.createTextField
-import com.example.carpoint.displayLogo
+import com.example.carpoint.utils.createButton
+import com.example.carpoint.utils.createTextField
+import com.example.carpoint.utils.displayLogo
 
 @Composable
 fun ResetPasswordTransmission(navController : NavController){
+    var scope = rememberCoroutineScope()
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -27,6 +28,6 @@ fun ResetPasswordTransmission(navController : NavController){
     ){
         displayLogo()
         createTextField(placeholderResId = R.string.enterYourEmail, leadingIcon = Icons.Default.Email)
-        createButton(placeholderResId = R.string.submit, {navController.navigate("resetpassword")})
+        createButton(placeholderResId = R.string.submit, scope,{navController.navigate("resetpassword")})
     }
 }

@@ -1,4 +1,4 @@
-package com.example.carpoint
+package com.example.carpoint.utils
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -16,7 +16,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,6 +34,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.carpoint.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 class Utils {
 }
@@ -68,11 +70,13 @@ fun displayLogo() {
 
 
 @Composable
-fun createButton(@StringRes placeholderResId: Int, onClick: () -> Unit) {
+fun createButton(@StringRes placeholderResId: Int,scope : CoroutineScope ,onClick: () -> Unit) {
 
     MaterialTheme() {
         Button(
-            onClick = onClick ,
+            onClick = {scope.launch {
+                onClick
+            }} ,
             colors = ButtonDefaults.buttonColors(Color(0xFF1e88c1)),
             modifier = Modifier
                 .padding(50.dp),

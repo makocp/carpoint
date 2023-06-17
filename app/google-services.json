@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "442227296594",
-    "project_id": "carpoint-df50c",
-    "storage_bucket": "carpoint-df50c.appspot.com"
+    "project_number": "54018004044",
+    "project_id": "carpoint-2279a",
+    "storage_bucket": "carpoint-2279a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:442227296594:android:624636d7b1ee14504fd28b",
+        "mobilesdk_app_id": "1:54018004044:android:849b1609eb2a46a6fcd0e9",
         "android_client_info": {
           "package_name": "com.example.carpoint"
         }
       },
       "oauth_client": [
         {
-          "client_id": "442227296594-cc75j3jvjepef04clh2ov3ahamq77t1f.apps.googleusercontent.com",
+          "client_id": "54018004044-3ud7ki3ql75n23q6j1l8uksv8r2m6evt.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCmOXt1lpnSb90KCLglUr3pjyuolySR544"
+          "current_key": "AIzaSyCXK3SI0QZsEW6G5NDSUHt0Ar7ycxo3eJA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "442227296594-cc75j3jvjepef04clh2ov3ahamq77t1f.apps.googleusercontent.com",
+              "client_id": "54018004044-3ud7ki3ql75n23q6j1l8uksv8r2m6evt.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
