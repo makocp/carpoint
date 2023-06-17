@@ -16,7 +16,6 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.example.carpoint.Screens.Dashboard.BottomBarNavigation.BottomNavGraph
 import com.example.carpoint.Screens.Dashboard.BottomBarNavigation.BottomNavObject
 
@@ -24,8 +23,7 @@ import com.example.carpoint.Screens.Dashboard.BottomBarNavigation.BottomNavObjec
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardScreen() {
-    val navController = rememberNavController()
+fun DashboardScreen(navController: NavHostController) {
 
     // TODO: Replace Scaffold (Row, Box).
     Scaffold(
