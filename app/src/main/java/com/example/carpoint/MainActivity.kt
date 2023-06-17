@@ -13,9 +13,7 @@ import com.example.carpoint.Screens.LogIn.LogInScreen
 import com.example.carpoint.Screens.ResetPassword.ResetPassword
 import com.example.carpoint.Screens.ResetPassword.ResetPasswordTransmission
 import com.example.carpoint.Screens.SignUp.SignUpScreen
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
