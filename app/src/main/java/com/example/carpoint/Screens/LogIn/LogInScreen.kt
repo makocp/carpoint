@@ -31,9 +31,11 @@ import com.example.carpoint.addText
 import com.example.carpoint.createButton
 import com.example.carpoint.createTextField
 import com.example.carpoint.displayLogo
+import androidx.hilt.navigation.compose.hiltViewModel
+
 
 @Composable
-fun LogInScreen(navController: NavController) {
+fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltViewModel()) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -48,7 +50,7 @@ fun LogInScreen(navController: NavController) {
         createTextField(placeholderResId = R.string.email, leadingIcon = Icons.Default.Email)
         createTextField(placeholderResId = R.string.password, leadingIcon = Icons.Default.Lock)
         addClickableText(text = R.string.forgotPassword, fontsize = 15, color = Color(0xFF1e88c1),{ navController.navigate("resetpasswordTransmission")})
-        createButton(placeholderResId = R.string.logIn, {navController.navigate("dashboard")})
+        createButton(placeholderResId = R.string.logIn, {viewModel.log()})
 
         addDivider(padding = 30)
         Row {
@@ -57,34 +59,4 @@ fun LogInScreen(navController: NavController) {
         }
     }
 }
-
-
-@Preview
-@Composable
-fun LogInScreen() {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ) {
-        val email by remember { mutableStateOf("") }
-        val password by remember { mutableStateOf("") }
-
-        displayLogo()
-        createTextField(placeholderResId = R.string.email, leadingIcon = Icons.Default.Email)
-        createTextField(placeholderResId = R.string.password, leadingIcon = Icons.Default.Lock)
-        addClickableText(text = R.string.forgotPassword, fontsize = 15, color = Color(0xFF1e88c1),{ })
-
-        createButton(placeholderResId = R.string.logIn, {})
-
-        addDivider(padding = 30)
-        Row {
-            addText(text = R.string.alreadyHaveAccount, fontsize = 15, Color.Gray)
-            addClickableText(text = R.string.signUp, fontsize = 15, color = Color(0xFF1e88c1),{})
-        }
-    }
-}
-
 

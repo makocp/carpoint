@@ -1,6 +1,6 @@
 package com.example.carpoint
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-class CarPointApp  : Application(){
-}
+@HiltAndroidApp class CarPointApp  : Application(){}
