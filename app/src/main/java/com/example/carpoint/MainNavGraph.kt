@@ -12,12 +12,11 @@ import com.example.carpoint.Screens.SignUp.SignUpScreen
 
 @Composable
 fun MainNavGraph(navController: NavHostController){
-    //TODO: routes als Constants anlegen.
     NavHost(navController = navController, startDestination = "login") {
         composable("login") { LogInScreen(navController) }
         composable("signup") { SignUpScreen(navController) }
         composable("resetpasswordTransmission") { ResetPasswordTransmission(navController) }
         composable("resetpassword"){ ResetPassword(navController) }
-        composable("dashboard") { DashboardScreen(navController) }
+        composable("dashboard") { DashboardScreen() }
     }
 }

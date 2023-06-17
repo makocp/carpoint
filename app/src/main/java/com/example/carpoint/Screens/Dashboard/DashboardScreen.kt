@@ -16,6 +16,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.carpoint.Screens.Dashboard.BottomBarNavigation.BottomNavGraph
 import com.example.carpoint.Screens.Dashboard.BottomBarNavigation.BottomNavObject
 
@@ -23,7 +24,8 @@ import com.example.carpoint.Screens.Dashboard.BottomBarNavigation.BottomNavObjec
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardScreen(navController: NavHostController) {
+fun DashboardScreen() {
+    val navController = rememberNavController()
 
     // This is the manually created list.
 //    val bottomNavObjects = listOf(
