@@ -1,5 +1,6 @@
 package com.example.carpoint
 
+import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia.Companion.isPhotoPickerAvailable
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 
@@ -20,5 +21,10 @@ class ExampleInstrumentedTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.carpoint", appContext.packageName)
+    }
+
+    @Test
+    fun test(){
+        assertEquals(true,isPhotoPickerAvailable())
     }
 }
