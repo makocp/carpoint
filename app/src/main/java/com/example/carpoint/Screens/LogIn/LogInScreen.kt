@@ -43,8 +43,8 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
         val scope = rememberCoroutineScope()
 
         displayLogo()
-        createTextField(placeholderResId = R.string.email, leadingIcon = Icons.Default.Email)
-        createTextField(placeholderResId = R.string.password, leadingIcon = Icons.Default.Lock)
+        createTextField(placeholderResId = R.string.email, leadingIcon = Icons.Default.Email,"",{})
+        createTextField(placeholderResId = R.string.password, leadingIcon = Icons.Default.Lock,"",{})
         addClickableText(text = R.string.forgotPassword, fontsize = 15, color = Color(0xFF1e88c1),{ navController.navigate("resetpasswordTransmission")})
         createButton(placeholderResId = R.string.logIn, scope,{viewModel.loginUser("mohammed.alamer@edu.fh-joanneum.at", "!Admin321")})
 

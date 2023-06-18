@@ -88,17 +88,14 @@ fun createButton(@StringRes placeholderResId: Int,scope : CoroutineScope ,onClic
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun createTextField(@StringRes placeholderResId: Int, leadingIcon: ImageVector) {
+fun createTextField(@StringRes placeholderResId: Int, leadingIcon: ImageVector, value: String,onTextChanged: (String) -> Unit) {
     MaterialTheme {
-        val inputValue = remember {
-            mutableStateOf(TextFieldValue())
-        }
         OutlinedTextField(
             modifier = Modifier
                 .padding(10.dp),
-            value = inputValue.value,
+            value = value,
             leadingIcon = { Icon(imageVector = leadingIcon, contentDescription = "emailIcon") },
-            onValueChange = { inputValue.value = it },
+            onValueChange = { onTextChanged },
             placeholder = { Text(text = stringResource(placeholderResId)) }
         )
     }

@@ -18,7 +18,6 @@ class SignUpViewModel @Inject constructor(
 ) : ViewModel() {
     val _signUpState = Channel<SignUpState>()
     val signUpState = _signUpState.receiveAsFlow()
-    val auth0 = auth
     fun createUser(email: String, password: String) = viewModelScope.launch {
         auth.createUser(email, password).collect { result ->
             when (result) {

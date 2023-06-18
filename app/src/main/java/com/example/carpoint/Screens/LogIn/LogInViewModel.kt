@@ -22,7 +22,7 @@ class LogInViewModel @Inject constructor(
         auth.loginUser(email, password).collect { result ->
             when (result) {
                 is Resource.success -> {
-                    _logInState.send(LogInState(isSuccess = "Sign In Success "))
+                    _logInState.send(LogInState(isSuccess = "Sign In Success"))
                 }
                 is Resource.loading -> {
                     _logInState.send(LogInState(isLoading = true))
