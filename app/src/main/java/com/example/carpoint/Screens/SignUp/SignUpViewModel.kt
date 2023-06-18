@@ -22,7 +22,7 @@ class SignUpViewModel @Inject constructor(
         auth.createUser(email, password).collect { result ->
             when (result) {
                 is Resource.success -> {
-                    _signUpState.send(SignUpState(isSuccess = "Sign In Success "))
+                    _signUpState.send(SignUpState(isSuccess = "Created Account Successfully"))
                 }
                 is Resource.loading -> {
                     _signUpState.send(SignUpState(isLoading = true))

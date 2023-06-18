@@ -29,7 +29,7 @@ class LogInViewModel @Inject constructor(
 
                 }
                 is Resource.error -> {
-                    _logInState.send(LogInState(isError = result.message))
+                    _logInState.send(LogInState(isError = "something went wrong!"))
                 }
             }
         }
