@@ -1,6 +1,5 @@
 package com.example.carpoint.Screens.LogIn
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.carpoint.Authentication.IAuthentication
@@ -11,13 +10,24 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel class responsible for handling login-related functionality.
+ *
+ * @param auth The instance of [IAuthentication] for authentication operations.
+ */
 @HiltViewModel
 class LogInViewModel @Inject constructor(
-    private val auth : IAuthentication
+    private val auth: IAuthentication
 ) : ViewModel() {
-    val _logInState = Channel<LogInState>()
+    private val _logInState = Channel<LogInState>()
     val logInState = _logInState.receiveAsFlow()
 
+    /**
+     * Logs in a user with the specified email and password.
+     *
+     * @param email The email of the user.
+     * @param password The password of the user.
+     */
     fun loginUser(email: String, password: String) = viewModelScope.launch {
         auth.loginUser(email, password).collect { result ->
             when (result) {
@@ -26,10 +36,9 @@ class LogInViewModel @Inject constructor(
                 }
                 is Resource.loading -> {
                     _logInState.send(LogInState(isLoading = true))
-
                 }
                 is Resource.error -> {
-                    _logInState.send(LogInState(isError = "something went wrong!"))
+                    _logInState.send(LogInState(isError = "Something went wrong!"))
                 }
             }
         }
