@@ -3,6 +3,7 @@ package com.example.carpoint.utils
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.ClickableText
@@ -16,6 +17,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -70,13 +73,11 @@ fun displayLogo() {
 
 
 @Composable
-fun createButton(@StringRes placeholderResId: Int,scope : CoroutineScope ,onClick: () -> Unit) {
+fun createButton(@StringRes placeholderResId: Int ,onClick: () -> Unit) {
 
     MaterialTheme() {
         Button(
-            onClick = {scope.launch {
-                onClick
-            }} ,
+            onClick = onClick ,
             colors = ButtonDefaults.buttonColors(Color(0xFF1e88c1)),
             modifier = Modifier
                 .padding(50.dp),
@@ -94,8 +95,8 @@ fun createTextField(@StringRes placeholderResId: Int, leadingIcon: ImageVector, 
             modifier = Modifier
                 .padding(10.dp),
             value = value,
-            leadingIcon = { Icon(imageVector = leadingIcon, contentDescription = "emailIcon") },
-            onValueChange = { onTextChanged },
+            leadingIcon = { Icon(imageVector = leadingIcon, contentDescription = "Icon") },
+            onValueChange = onTextChanged ,
             placeholder = { Text(text = stringResource(placeholderResId)) }
         )
     }
@@ -103,9 +104,24 @@ fun createTextField(@StringRes placeholderResId: Int, leadingIcon: ImageVector, 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun createPasswordField(@StringRes placeholderResId: Int, leadingIcon: ImageVector) {
+fun TextFieldComponent(value: String, onValueChange: (String) -> Unit) {
+    TextField(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp),
+        placeholder = {
+            Text(text = "Enter your text here")
+        }
+    )
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun createPasswordField(@StringRes placeholderResId: Int, leadingIcon: ImageVector,value: String, onValueChange: (String) -> Unit) {
     MaterialTheme {
-        val inputValue = remember { mutableStateOf(TextFieldValue()) }
         var passwordVisibility by remember { mutableStateOf(false) }
 
         val icon = if (passwordVisibility)
@@ -115,10 +131,9 @@ fun createPasswordField(@StringRes placeholderResId: Int, leadingIcon: ImageVect
 
         OutlinedTextField(
             modifier = Modifier.padding(10.dp),
-            value = inputValue.value,
+            value = value,
             leadingIcon = { Icon(imageVector = leadingIcon, contentDescription = "emailIcon") },
-            onValueChange = { inputValue.value = it
-                            print(it)},
+            onValueChange = onValueChange,
             placeholder = { Text(text = stringResource(placeholderResId)) },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password
@@ -126,7 +141,7 @@ fun createPasswordField(@StringRes placeholderResId: Int, leadingIcon: ImageVect
             visualTransformation = if (passwordVisibility) VisualTransformation.None
             else PasswordVisualTransformation(),
             trailingIcon = {
-                if (inputValue.value.text.isNotEmpty()) {
+                if (value.isNotEmpty()) {
                     IconButton(onClick = {
                         passwordVisibility = !passwordVisibility
                     }) {

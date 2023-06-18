@@ -27,7 +27,7 @@ fun ResetPasswordTransmission(navController : NavController){
             .background(Color.White)
     ){
         displayLogo()
-        createTextField(placeholderResId = R.string.enterYourEmail, leadingIcon = Icons.Default.Email,"",{})
-        createButton(placeholderResId = R.string.submit, scope,{navController.navigate("resetpassword")})
+       // createTextField(placeholderResId = R.string.enterYourEmail, leadingIcon = Icons.Default.Email,"",{})
+        createButton(placeholderResId = R.string.submit,{navController.navigate("resetpassword")})
     }
 }

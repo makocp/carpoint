@@ -49,10 +49,11 @@ import com.example.carpoint.utils.createTextField
 import com.example.carpoint.utils.displayLogo
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.carpoint.Authentication.IAuthentication
+import com.example.carpoint.utils.TextFieldComponent
+import com.example.carpoint.utils.createPasswordField
 import kotlinx.coroutines.launch
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltViewModel()) {
 
@@ -68,78 +69,25 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
         val scope = rememberCoroutineScope()
         val state = viewModel.logInState.collectAsState(initial = null)
         val context = LocalContext.current
-        var passwordVisibility by remember { mutableStateOf(false) }
-        val icon = if (passwordVisibility)
-            painterResource(id = R.drawable.displayed)
-        else
-            painterResource(id = R.drawable.hidden)
+
 
 
         displayLogo()
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(10.dp),
+        createTextField(
+            placeholderResId = R.string.email,
+            leadingIcon = Icons.Default.Email,
             value = email,
-            onValueChange = { email = it },
-            placeholder = { Text(text = stringResource(R.string.email)) },
-            singleLine = true,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Email,
-                    contentDescription = "emailIcon"
-                )
-            },
-        )
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(10.dp),
+            onTextChanged = { email = it })
+        createPasswordField(placeholderResId = R.string.password,
+            leadingIcon = Icons.Default.Lock,
             value = password,
-            onValueChange = { password = it },
-            placeholder = { Text(text = stringResource(R.string.password)) },
-            singleLine = true,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = "emailIcon"
-                )
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password
-            ),
-            visualTransformation = if (passwordVisibility) VisualTransformation.None
-            else PasswordVisualTransformation(),
-            trailingIcon = {
-                if (password.isNotEmpty()) {
-                    IconButton(onClick = {
-                        passwordVisibility = !passwordVisibility
-                    }) {
-                        Icon(
-                            painter = icon,
-                            contentDescription = "Visibility Icon",
-                            modifier = Modifier.size(20.dp)
-                        )
-                    }
-                }
-            }
-        )
+            onValueChange = { password = it })
         addClickableText(
             text = R.string.forgotPassword,
             fontsize = 15,
             color = Color(0xFF1e88c1),
             { navController.navigate("resetpasswordTransmission") })
-        Button(
-            colors = ButtonDefaults.buttonColors(Color(0xFF1e88c1)),
-            modifier = Modifier
-                .padding(50.dp), onClick = {
-                scope.launch {
-                    viewModel.loginUser(email, password)
-
-                }
-            })
-        {
-            Text(text = stringResource(id = R.string.logIn))
-
-        }
+        createButton(R.string.logIn,{scope.launch { viewModel.loginUser(email, password) }})
         addDivider(padding = 30)
         Row {
             addText(text = R.string.alreadyHaveAccount, fontsize = 15, Color.Gray)
@@ -166,7 +114,7 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
         } else if (state.value?.isSuccess?.isNotEmpty() == true) {
             navController.navigate("dashboard")
         } else if (state.value?.isError?.isNotEmpty() == true) {
-            Toast.makeText(context,state.value?.isError, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, state.value?.isError, Toast.LENGTH_SHORT).show()
         }
     }
 }

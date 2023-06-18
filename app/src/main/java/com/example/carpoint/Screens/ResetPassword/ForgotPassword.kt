@@ -19,7 +19,7 @@ import com.example.carpoint.utils.createButton
 import com.example.carpoint.utils.createPasswordField
 
 @Composable
-fun ResetPassword(navController : NavController){
+fun ResetPassword(navController: NavController) {
     val scope = rememberCoroutineScope()
     Column(
         verticalArrangement = Arrangement.Center,
@@ -27,11 +27,11 @@ fun ResetPassword(navController : NavController){
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-    ){
+    ) {
         addText(text = R.string.enterNewPassword, fontsize = 25, color = Color.Black)
-        createPasswordField(placeholderResId = R.string.enterNewPassword, leadingIcon = Icons.Default.Edit)
-        createPasswordField(placeholderResId = R.string.confirmNewPassword, leadingIcon = Icons.Default.Check)
-        createButton(placeholderResId = R.string.resetPassword,scope,{    navController.popBackStack(navController.graph.startDestinationId, false) })
+        // createPasswordField(placeholderResId = R.string.enterNewPassword, leadingIcon = Icons.Default.Edit)
+        // createPasswordField(placeholderResId = R.string.confirmNewPassword, leadingIcon = Icons.Default.Check)
+        // createButton(placeholderResId = R.string.resetPassword,scope,{    navController.popBackStack(navController.graph.startDestinationId, false) })
     }
 }
 
