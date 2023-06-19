@@ -14,6 +14,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -47,6 +48,9 @@ import com.example.carpoint.R
 import com.example.carpoint.utils.addClickableText
 import com.example.carpoint.utils.addDivider
 import com.example.carpoint.utils.addText
+import com.example.carpoint.utils.createButton
+import com.example.carpoint.utils.createPasswordField
+import com.example.carpoint.utils.createTextField
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,15 +60,13 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
     val state = viewModel.signUpState.collectAsState(initial = null)
     val context = LocalContext.current
     var email by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
+
     var password by remember { mutableStateOf("") }
-    var repeatPassword by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
 
 
-    var passwordVisibility by remember { mutableStateOf(false) }
-    val icon = if (passwordVisibility)
-        painterResource(id = R.drawable.displayed)
-    else
-        painterResource(id = R.drawable.hidden)
+
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -72,103 +74,41 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
         verticalArrangement = Arrangement.Center
     ) {
         addText(text = R.string.createAccount, fontsize = 30, color = Color.Black)
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(10.dp),
+        createTextField(
+            placeholderResId = R.string.email,
+            leadingIcon = Icons.Default.Email,
             value = email,
-            onValueChange = { email = it },
-            placeholder = { Text(text = stringResource(R.string.email)) },
-            singleLine = true,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Email,
-                    contentDescription = "emailIcon"
-                )
-            },
-        )
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(10.dp),
+            onTextChanged = { email = it })
+        createTextField(
+            placeholderResId = R.string.Username,
+            leadingIcon = Icons.Default.Person,
+            value = username,
+            onTextChanged = { username = it })
+        createPasswordField(
+            placeholderResId = R.string.password,
+            leadingIcon = Icons.Default.Lock,
             value = password,
-            onValueChange = { password = it },
-            placeholder = { Text(text = stringResource(R.string.password)) },
-            singleLine = true,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = "emailIcon"
-                )
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password
-            ),
-            visualTransformation = if (passwordVisibility) VisualTransformation.None
-            else PasswordVisualTransformation(),
-            trailingIcon = {
-                if (password.isNotEmpty()) {
-                    IconButton(onClick = {
-                        passwordVisibility = !passwordVisibility
-                    }) {
-                        Icon(
-                            painter = icon,
-                            contentDescription = "Visibility Icon",
-                            modifier = Modifier.size(20.dp)
-                        )
-                    }
-                }
-            }
-        )
-
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(10.dp),
-            value = repeatPassword,
-            onValueChange = { repeatPassword = it },
-            placeholder = { Text(text = stringResource(R.string.resetPassword)) },
-            singleLine = true,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = "emailIcon"
-                )
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password
-            ),
-            visualTransformation = if (passwordVisibility) VisualTransformation.None
-            else PasswordVisualTransformation(),
-            trailingIcon = {
-                if (repeatPassword.isNotEmpty()) {
-                    IconButton(onClick = {
-                        passwordVisibility = !passwordVisibility
-                    }) {
-                        Icon(
-                            painter = icon,
-                            contentDescription = "Visibility Icon",
-                            modifier = Modifier.size(20.dp)
-                        )
-                    }
-                }
-            }
-        )
-        Button(
-            colors = ButtonDefaults.buttonColors(Color(0xFF1e88c1)),
-            modifier = Modifier
-                .padding(50.dp), onClick = {
+            onValueChange = { password = it })
+        createPasswordField(
+            placeholderResId = R.string.confirmPassword,
+            leadingIcon = Icons.Default.Lock,
+            value = confirmPassword,
+            onValueChange = { confirmPassword = it })
+        createButton(placeholderResId = R.string.createAccount, {
+            if (password.equals(confirmPassword)) {
                 scope.launch {
-                    if (password.equals(repeatPassword)) {
-                        viewModel.createUser(email, password)
-                    }
+                    viewModel.createUser(email, password)
                 }
-            })
-        {
-            Text(text = stringResource(id = R.string.signUp))
-
-        }
+            }
+        })
         addDivider(padding = 30)
         Row {
             addText(text = R.string.alreadyHaveAccount, fontsize = 15, Color.Gray)
-            addClickableText(text = R.string.logIn, fontsize = 15, color = Color(0xFF1e88c1),{navController.navigate("login")})
+            addClickableText(
+                text = R.string.logIn,
+                fontsize = 15,
+                color = Color(0xFF1e88c1),
+                { navController.navigate("login") })
         }
         if (state.value?.isLoading == true) {
             Box(
@@ -183,8 +123,8 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
                         .progressSemantics()
                 )
             }
-        } else if(state.value?.isSuccess?.isNotEmpty() == true) {
-            Toast.makeText(context,state.value?.isSuccess, Toast.LENGTH_SHORT).show()
+        } else if (state.value?.isSuccess?.isNotEmpty() == true) {
+            Toast.makeText(context, state.value?.isSuccess, Toast.LENGTH_SHORT).show()
             navController.navigate("dashboard")
         }
     }

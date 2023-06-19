@@ -51,6 +51,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.carpoint.Authentication.IAuthentication
 import com.example.carpoint.utils.TextFieldComponent
 import com.example.carpoint.utils.createPasswordField
+import com.example.carpoint.utils.indicateProgressing
 import kotlinx.coroutines.launch
 
 
@@ -73,22 +74,29 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
 
 
         displayLogo()
+        addText(text = R.string.logIn, fontsize = 30, color = Color.Black)
         createTextField(
             placeholderResId = R.string.email,
             leadingIcon = Icons.Default.Email,
             value = email,
             onTextChanged = { email = it })
-        createPasswordField(placeholderResId = R.string.password,
+
+        createPasswordField(
+            placeholderResId = R.string.password,
             leadingIcon = Icons.Default.Lock,
             value = password,
             onValueChange = { password = it })
+
         addClickableText(
             text = R.string.forgotPassword,
             fontsize = 15,
             color = Color(0xFF1e88c1),
             { navController.navigate("resetpasswordTransmission") })
-        createButton(R.string.logIn,{scope.launch { viewModel.loginUser(email, password) }})
+
+        createButton(R.string.logIn, { scope.launch { viewModel.loginUser(email, password) } })
+
         addDivider(padding = 30)
+
         Row {
             addText(text = R.string.alreadyHaveAccount, fontsize = 15, Color.Gray)
             addClickableText(
@@ -99,18 +107,7 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
         }
 
         if (state.value?.isLoading == true) {
-            Box(
-                modifier = Modifier
-                    .background(Color.White)
-                    .padding(12.dp)
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(12.dp)
-                        .align(Alignment.Center)
-                        .progressSemantics()
-                )
-            }
+       indicateProgressing()
         } else if (state.value?.isSuccess?.isNotEmpty() == true) {
             navController.navigate("dashboard")
         } else if (state.value?.isError?.isNotEmpty() == true) {

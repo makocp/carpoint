@@ -25,4 +25,6 @@ interface IAuthentication {
      * @return A [Flow] emitting [Resource] objects containing [AuthResult] indicating the user creation operation status.
      */
     fun createUser(email: String, password: String): Flow<Resource<AuthResult>>
+
+    fun sendResetPasswordMail(email: String)
 }

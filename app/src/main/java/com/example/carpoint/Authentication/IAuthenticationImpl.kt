@@ -51,4 +51,8 @@ class AuthRepositoryImpl @Inject constructor(
             emit(Resource.error(it.message.toString()))
         }
     }
+
+    override fun sendResetPasswordMail(email: String) {
+        firebaseAuth.sendPasswordResetEmail(email)
+    }
 }

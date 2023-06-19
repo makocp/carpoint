@@ -2,14 +2,18 @@ package com.example.carpoint.utils
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.progressSemantics
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -24,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -73,15 +78,15 @@ fun displayLogo() {
 
 
 @Composable
-fun createButton(@StringRes placeholderResId: Int ,onClick: () -> Unit) {
+fun createButton(@StringRes placeholderResId: Int, onClick: () -> Unit) {
 
     MaterialTheme() {
         Button(
-            onClick = onClick ,
+            onClick = onClick,
             colors = ButtonDefaults.buttonColors(Color(0xFF1e88c1)),
             modifier = Modifier
                 .padding(50.dp),
-            ) {
+        ) {
             Text(text = stringResource(id = placeholderResId))
         }
     }
@@ -89,14 +94,19 @@ fun createButton(@StringRes placeholderResId: Int ,onClick: () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun createTextField(@StringRes placeholderResId: Int, leadingIcon: ImageVector, value: String,onTextChanged: (String) -> Unit) {
+fun createTextField(
+    @StringRes placeholderResId: Int,
+    leadingIcon: ImageVector,
+    value: String,
+    onTextChanged: (String) -> Unit
+) {
     MaterialTheme {
         OutlinedTextField(
             modifier = Modifier
                 .padding(10.dp),
             value = value,
             leadingIcon = { Icon(imageVector = leadingIcon, contentDescription = "Icon") },
-            onValueChange = onTextChanged ,
+            onValueChange = onTextChanged,
             placeholder = { Text(text = stringResource(placeholderResId)) }
         )
     }
@@ -120,7 +130,12 @@ fun TextFieldComponent(value: String, onValueChange: (String) -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun createPasswordField(@StringRes placeholderResId: Int, leadingIcon: ImageVector,value: String, onValueChange: (String) -> Unit) {
+fun createPasswordField(
+    @StringRes placeholderResId: Int,
+    leadingIcon: ImageVector,
+    value: String,
+    onValueChange: (String) -> Unit
+) {
     MaterialTheme {
         var passwordVisibility by remember { mutableStateOf(false) }
 
@@ -158,7 +173,6 @@ fun createPasswordField(@StringRes placeholderResId: Int, leadingIcon: ImageVect
 }
 
 
-
 @Composable
 fun addText(@StringRes text: Int, fontsize: Int, color: Color) {
     Text(
@@ -178,4 +192,20 @@ fun addClickableText(@StringRes text: Int, fontsize: Int, color: Color, onClick:
             .padding(start = 4.dp),
         onClick = onClick
     )
+}
+
+@Composable
+fun indicateProgressing() {
+    Box(
+        modifier = Modifier
+            .background(Color.White)
+            .padding(12.dp)
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier
+                .size(12.dp)
+                .align(Alignment.Center)
+                .progressSemantics()
+        )
+    }
 }
