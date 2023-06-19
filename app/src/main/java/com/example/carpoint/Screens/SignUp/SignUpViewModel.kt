@@ -1,5 +1,6 @@
-package com.example.carpoint.Screens.LogIn
+package com.example.carpoint.Screens.SignUp
 
+import com.example.carpoint.Screens.LogIn.LogInState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.carpoint.Authentication.IAuthentication
@@ -11,34 +12,34 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * ViewModel class responsible for handling login-related functionality.
+ * ViewModel class responsible for handling sign-up-related functionality.
  *
  * @param auth The instance of [IAuthentication] for authentication operations.
  */
 @HiltViewModel
-class LogInViewModel @Inject constructor(
+class SignUpViewModel @Inject constructor(
     private val auth: IAuthentication
 ) : ViewModel() {
-    private val _logInState = Channel<LogInState>()
-    val logInState = _logInState.receiveAsFlow()
+    private val _signUpState = Channel<SignUpState>()
+    val signUpState = _signUpState.receiveAsFlow()
 
     /**
-     * Logs in a user with the specified email and password.
+     * Creates a new user with the specified email and password.
      *
      * @param email The email of the user.
      * @param password The password of the user.
      */
-    fun loginUser(email: String, password: String) = viewModelScope.launch {
-        auth.loginUser(email, password).collect { result ->
+    fun createUser(email: String, password: String) = viewModelScope.launch {
+        auth.createUser(email, password).collect { result ->
             when (result) {
                 is Resource.success -> {
-                    _logInState.send(LogInState(isSuccess = "Sign In Success"))
+                    _signUpState.send(SignUpState(isSuccess = "Created Account Successfully"))
                 }
                 is Resource.loading -> {
-                    _logInState.send(LogInState(isLoading = true))
+                    _signUpState.send(SignUpState(isLoading = true))
                 }
                 is Resource.error -> {
-                    _logInState.send(LogInState(isError = "Something went wrong!"))
+                    _signUpState.send(SignUpState(isError = result.message))
                 }
             }
         }

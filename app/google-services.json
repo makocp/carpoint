@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "54018004044",
+    "project_id": "carpoint-2279a",
+    "storage_bucket": "carpoint-2279a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54018004044:android:849b1609eb2a46a6fcd0e9",
+        "android_client_info": {
+          "package_name": "com.example.carpoint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54018004044-3ud7ki3ql75n23q6j1l8uksv8r2m6evt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXK3SI0QZsEW6G5NDSUHt0Ar7ycxo3eJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54018004044-3ud7ki3ql75n23q6j1l8uksv8r2m6evt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
