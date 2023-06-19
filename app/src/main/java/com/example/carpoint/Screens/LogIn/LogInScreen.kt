@@ -39,6 +39,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.example.carpoint.R
 import com.example.carpoint.utils.addClickableText
@@ -70,9 +71,6 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
         val scope = rememberCoroutineScope()
         val state = viewModel.logInState.collectAsState(initial = null)
         val context = LocalContext.current
-
-
-
         displayLogo()
         addText(text = R.string.logIn, fontsize = 30, color = Color.Black)
         createTextField(
@@ -97,14 +95,9 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
 
         addDivider(padding = 30)
 
-        Row {
-            addText(text = R.string.alreadyHaveAccount, fontsize = 15, Color.Gray)
-            addClickableText(
-                text = R.string.signUp,
-                fontsize = 15,
-                color = Color(0xFF1e88c1),
-                { navController.navigate("signup") })
-        }
+        Row {           
+            addText(text = R.string.dontHaveAccount, fontsize = 15, Color.Gray)
+            addClickableText(text = R.string.signUp, fontsize = 15, color = Color(0xFF1e88c1),{})
 
         if (state.value?.isLoading == true) {
        indicateProgressing()
@@ -112,6 +105,7 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
             navController.navigate("dashboard")
         } else if (state.value?.isError?.isNotEmpty() == true) {
             Toast.makeText(context, state.value?.isError, Toast.LENGTH_SHORT).show()
+
         }
     }
 }

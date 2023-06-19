@@ -25,6 +25,26 @@ fun HomeScreen() {
         Text(
             text = "Home",
             fontSize = 100.sp,
-            fontWeight = FontWeight.Bold)
+            fontWeight = FontWeight.Bold
+        )
     }
 }
+
+@Preview
+@Composable
+fun ProfileView() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Blue),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Home",
+            fontSize = 100.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+

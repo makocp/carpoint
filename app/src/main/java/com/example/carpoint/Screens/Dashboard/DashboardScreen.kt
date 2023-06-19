@@ -27,25 +27,32 @@ import com.example.carpoint.Screens.Dashboard.BottomBarNavigation.BottomNavObjec
 fun DashboardScreen() {
     val navController = rememberNavController()
 
+    // This is the manually created list.
+//    val bottomNavObjects = listOf(
+//        BottomNavObject.Home,
+//        BottomNavObject.Profile,
+//        BottomNavObject.Settings
+//    )
+
+    /*
+    This is a dynamically created list of all subclasses of the sealed class BottomNavObject.
+    The function gets all subclasses, casts it as instances and maps it into the list.
+     */
+    val bottomNavObjects = BottomNavObject::class.sealedSubclasses
+        .mapNotNull { it.objectInstance }
+
     // TODO: Replace Scaffold (Row, Box).
     Scaffold(
         bottomBar = {
-            BottomBar(navController = navController)
+            BottomBar(navController = navController, bottomNavObjects)
         }
     ) {
         BottomNavGraph(navController)
     }
-
-
 }
 
 @Composable
-fun BottomBar(navController: NavHostController) {
-    val bottomNavObjects = listOf(
-        BottomNavObject.Home,
-        BottomNavObject.Profile,
-        BottomNavObject.Settings
-    )
+fun BottomBar(navController: NavHostController, bottomNavObjects: List<BottomNavObject>) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 

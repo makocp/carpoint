@@ -10,7 +10,7 @@
     <string name="alreadyHaveAccount">Already Have an Account?</string>
     <string name="signUp">Sign Up</string>
     <string name="logIn">Log In</string>
-    <string name="dontHaveAccount">don\'t have an Account yet?</string>
+    <string name="dontHaveAccount">Don\'t have an Account?</string>
     <string name="enterYourEmail">Please enter your E-mail</string>
     <string name="resetPassword">Reset Password</string>
     <string name="enterNewPassword">Enter new Password</string>
