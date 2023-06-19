@@ -1,6 +1,8 @@
 package com.example.carpoint.Screens.Dashboard
 
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,8 +25,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import com.example.carpoint.R
 
@@ -32,17 +35,27 @@ import com.example.carpoint.R
 fun ProfileScreen() {
 
     // TODO: Hier von Storage Uri/Image reinholen.
+    // TODO: Cachen, lokal speichern.
     var uri by remember {
         mutableStateOf<Uri?>(null)
     }
 
-
-    val photoPicker = rememberLauncherForActivityResult(
+    val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = {
             uri = it
         }
     )
+
+    val context = LocalContext.current
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = { isGranted ->
+            Toast.makeText(context,"isGranted = $isGranted", Toast.LENGTH_SHORT).show()
+        }
+    )
+
 
     Column(
         modifier = Modifier
@@ -67,20 +80,27 @@ fun ProfileScreen() {
                 contentDescription = "profile_image",
                 modifier = Modifier
                     .clickable {
-                        photoPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                        if (ContextCompat.checkSelfPermission(
+                                context,
+                                android.Manifest.permission.READ_EXTERNAL_STORAGE
+                            ) == PackageManager.PERMISSION_GRANTED
+                        ) {
+                            photoPickerLauncher.launch(
+                                PickVisualMediaRequest(
+                                    ActivityResultContracts.PickVisualMedia.ImageOnly
+                                )
+                            )
+                        } else {
+                            permissionLauncher.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                        }
                     }
+                    .fillMaxSize()
             )
         }
         Button(
-            onClick = { photoPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) }
+            onClick = { permissionLauncher.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE) }
         ) {
             Text(text = "Pick Photo")
         }
     }
-}
-
-
-@Preview
-@Composable
-fun ProfileScreenPreview() {
 }
