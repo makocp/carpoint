@@ -1,12 +1,12 @@
-package com.example.carpoint.Screens.Dashboard.BottomBarNavigation
+package com.example.carpoint.screens.dashboard.BottomBarNavigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.carpoint.Screens.Dashboard.HomeScreen
-import com.example.carpoint.Screens.Dashboard.ProfileScreen
-import com.example.carpoint.Screens.Dashboard.SettingsScreen
+import com.example.carpoint.screens.dashboard.HomeScreen
+import com.example.carpoint.screens.dashboard.ProfileScreen
+import com.example.carpoint.screens.dashboard.SettingsScreen
 
 @Composable
 fun BottomNavGraph(

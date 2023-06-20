@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.carpoint.R
+import com.example.carpoint.screens.logIn.LogInViewModel
 import com.example.carpoint.utils.addClickableText
 import com.example.carpoint.utils.addDivider
 import com.example.carpoint.utils.addText
@@ -75,7 +76,7 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
 
         Row {
             addText(text = R.string.dontHaveAccount, fontsize = 15, Color.Gray)
-            addClickableText(text = R.string.signUp, fontsize = 15, color = Color(0xFF1e88c1), {})
+            addClickableText(text = R.string.signUp, fontsize = 15, color = Color(0xFF1e88c1), {navController.navigate("signup")})
 
             if (state.value?.isLoading == true) {
                 indicateProgressing()

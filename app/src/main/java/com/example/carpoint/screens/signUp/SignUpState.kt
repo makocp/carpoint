@@ -1,4 +1,4 @@
-package com.example.carpoint.Screens.SignUp
+package com.example.carpoint.screens.signUp
 
 /**
  * Represents the state of the sign-up process.

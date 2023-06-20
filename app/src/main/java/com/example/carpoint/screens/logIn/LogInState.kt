@@ -1,4 +1,4 @@
-package com.example.carpoint.Screens.LogIn
+package com.example.carpoint.screens.logIn
 
 /**
  * Represents the state of the login process.

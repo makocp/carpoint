@@ -64,9 +64,13 @@ dependencies {
     implementation 'androidx.navigation:navigation-compose:2.7.0-beta01'
     implementation 'androidx.compose.material:material:1.4.3'
     implementation 'androidx.core:core-ktx:1.10.1'
-    implementation 'androidx.navigation:navigation-runtime-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-runtime-ktx:2.5.2'
+
+
     implementation 'com.google.firebase:firebase-auth-ktx:22.0.0'
-    implementation 'com.google.firebase:firebase-auth:22.0.0'
+    implementation 'com.google.firebase:firebase-auth:21.1.0'
+    implementation platform('com.google.firebase:firebase-bom:32.1.1')
+    implementation 'com.google.firebase:firebase-database-ktx'
 
 
     implementation 'io.coil-kt:coil-compose:2.3.0'
@@ -84,8 +88,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.8.21"
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
-    implementation 'androidx.hilt:hilt-navigation-compose:1.1.0-alpha01'
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0-alpha03'
+
 }
-    kapt {
+kapt {
     correctErrorTypes = true
 }

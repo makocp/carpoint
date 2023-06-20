@@ -1,9 +1,10 @@
-package com.example.carpoint.Screens.SignUp
+package com.example.carpoint.screens.signUp
 
-import com.example.carpoint.Screens.LogIn.LogInState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.carpoint.Authentication.IAuthentication
+import com.example.carpoint.authentication.IAuthentication
+import com.example.carpoint.dataBase.IDatabaseHandler
+import com.example.carpoint.models.User
 import com.example.carpoint.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -18,8 +19,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val auth: IAuthentication
-) : ViewModel() {
+    private val auth: IAuthentication,
+    private val database: IDatabaseHandler) : ViewModel() {
     private val _signUpState = Channel<SignUpState>()
     val signUpState = _signUpState.receiveAsFlow()
 
@@ -29,7 +30,7 @@ class SignUpViewModel @Inject constructor(
      * @param email The email of the user.
      * @param password The password of the user.
      */
-    fun createUser(email: String, password: String) = viewModelScope.launch {
+    fun createAccount(email: String, password: String) = viewModelScope.launch {
         auth.createUser(email, password).collect { result ->
             when (result) {
                 is Resource.success -> {
@@ -43,5 +44,9 @@ class SignUpViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun createUser(user: User){
+        database.createUser(user)
     }
 }

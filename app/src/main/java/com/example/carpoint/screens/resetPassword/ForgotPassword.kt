@@ -1,12 +1,9 @@
-package com.example.carpoint.Screens.ResetPassword
+package com.example.carpoint.screens.resetPassword
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -15,8 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.example.carpoint.R
 import com.example.carpoint.utils.addText
-import com.example.carpoint.utils.createButton
-import com.example.carpoint.utils.createPasswordField
 
 @Composable
 fun ResetPassword(navController: NavController) {

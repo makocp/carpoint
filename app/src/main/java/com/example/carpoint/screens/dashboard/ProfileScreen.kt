@@ -1,4 +1,4 @@
-package com.example.carpoint.Screens.Dashboard
+package com.example.carpoint.screens.dashboard
 
 import android.content.pm.PackageManager
 import android.net.Uri

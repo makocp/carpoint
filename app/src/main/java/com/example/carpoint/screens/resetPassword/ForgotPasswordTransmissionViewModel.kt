@@ -1,8 +1,8 @@
-package com.example.carpoint.Screens.ResetPassword
+package com.example.carpoint.screens.resetPassword
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.carpoint.Authentication.IAuthentication
+import com.example.carpoint.authentication.IAuthentication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
