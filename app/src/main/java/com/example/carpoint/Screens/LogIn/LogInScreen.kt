@@ -95,17 +95,18 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
 
         addDivider(padding = 30)
 
-        Row {           
+        Row {
             addText(text = R.string.dontHaveAccount, fontsize = 15, Color.Gray)
-            addClickableText(text = R.string.signUp, fontsize = 15, color = Color(0xFF1e88c1),{})
+            addClickableText(text = R.string.signUp, fontsize = 15, color = Color(0xFF1e88c1), {navController.navigate("signup")})
 
-        if (state.value?.isLoading == true) {
-       indicateProgressing()
-        } else if (state.value?.isSuccess?.isNotEmpty() == true) {
-            navController.navigate("dashboard")
-        } else if (state.value?.isError?.isNotEmpty() == true) {
-            Toast.makeText(context, state.value?.isError, Toast.LENGTH_SHORT).show()
+            if (state.value?.isLoading == true) {
+                indicateProgressing()
+            } else if (state.value?.isSuccess?.isNotEmpty() == true) {
+                navController.navigate("dashboard")
+            } else if (state.value?.isError?.isNotEmpty() == true) {
+                Toast.makeText(context, state.value?.isError, Toast.LENGTH_SHORT).show()
 
+            }
         }
     }
 }
