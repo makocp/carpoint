@@ -1,4 +1,4 @@
-package com.example.carpoint.screens.logIn
+package com.example.carpoint.Screens.LogIn
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -20,16 +20,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.carpoint.R
+import com.example.carpoint.screens.logIn.LogInViewModel
 import com.example.carpoint.utils.addClickableText
 import com.example.carpoint.utils.addDivider
 import com.example.carpoint.utils.addText
 import com.example.carpoint.utils.createButton
+import com.example.carpoint.utils.createPasswordField
 import com.example.carpoint.utils.createTextField
 import com.example.carpoint.utils.displayLogo
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.carpoint.utils.createPasswordField
 import com.example.carpoint.utils.indicateProgressing
 import kotlinx.coroutines.launch
 
@@ -75,7 +76,7 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
 
         Row {
             addText(text = R.string.dontHaveAccount, fontsize = 15, Color.Gray)
-            addClickableText(text = R.string.signUp, fontsize = 15, color = Color(0xFF1e88c1), {navController.navigate("signup")})
+            addClickableText(text = R.string.signUp, fontsize = 15, color = Color(0xFF1e88c1), {})
 
             if (state.value?.isLoading == true) {
                 indicateProgressing()
@@ -88,4 +89,3 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
         }
     }
 }
-
