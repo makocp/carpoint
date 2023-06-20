@@ -38,6 +38,7 @@ import com.example.carpoint.utils.addText
 import com.example.carpoint.utils.createButton
 import com.example.carpoint.utils.createPasswordField
 import com.example.carpoint.utils.createTextField
+import kotlinx.coroutines.cancel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,10 +46,8 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
 
     val scope = rememberCoroutineScope()
     val state = viewModel.signUpState.collectAsState(initial = null)
-    val context = LocalContext.current
     var email by remember { mutableStateOf("") }
     var username by remember { mutableStateOf("") }
-
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
@@ -110,9 +109,13 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
                         .progressSemantics()
                 )
             }
-        } else if (state.value?.isSuccess?.isNotEmpty() == true) {
-            viewModel.createUser(User(name = username, email = email, profileImage = ""))
-            navController.navigate("dashboard")
+        } else {
+            LaunchedEffect(state.value) {
+                if (state.value?.isSuccess?.isNotEmpty() == true) {
+                    viewModel.createUser(User(name = username, email = email, profileImage = ""))
+                    navController.navigate("dashboard")
+                }
+            }
         }
     }
 }
