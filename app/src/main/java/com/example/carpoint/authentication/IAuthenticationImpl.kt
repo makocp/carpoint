@@ -1,6 +1,5 @@
-package com.example.carpoint.Authentication
+package com.example.carpoint.authentication
 
-import android.util.Log
 import com.example.carpoint.utils.Resource
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth

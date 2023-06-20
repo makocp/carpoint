@@ -1,4 +1,4 @@
-package com.example.carpoint.Authentication
+package com.example.carpoint.authentication
 
 import com.example.carpoint.utils.Resource
 import com.google.firebase.auth.AuthResult

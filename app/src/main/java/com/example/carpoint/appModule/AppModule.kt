@@ -1,12 +1,14 @@
-package com.example.carpoint.AppModule
+package com.example.carpoint.appModule
 
-import com.example.carpoint.Authentication.AuthRepositoryImpl
-import com.example.carpoint.Authentication.IAuthentication
+import com.example.carpoint.authentication.AuthRepositoryImpl
+import com.example.carpoint.authentication.IAuthentication
+import com.example.carpoint.dataBase.IDatabaseHandler
+import com.example.carpoint.dataBase.IDatabaseHandlerImpl
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -26,6 +28,9 @@ object AppModule {
     @Singleton
     fun providesFirebaseAuth() = FirebaseAuth.getInstance()
 
+
+
+
     /**
      * Provides an implementation of [IAuthentication] interface using [AuthRepositoryImpl].
      *
@@ -37,4 +42,16 @@ object AppModule {
     fun providesRepositoryImpl(firebaseAuth: FirebaseAuth): IAuthentication {
         return AuthRepositoryImpl(firebaseAuth)
     }
+
+
+    @Provides
+    @Singleton
+    fun providesFirebaseDatabase() = FirebaseDatabase.getInstance()
+
+    @Provides
+    @Singleton
+    fun providesDatabaseImpl(firebaseDatabase: FirebaseDatabase): IDatabaseHandler {
+        return IDatabaseHandlerImpl(firebaseDatabase)
+    }
+
 }

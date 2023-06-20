@@ -1,8 +1,9 @@
-package com.example.carpoint.Screens.LogIn
+package com.example.carpoint.screens.logIn
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.carpoint.Authentication.IAuthentication
+import com.example.carpoint.authentication.IAuthentication
+import com.example.carpoint.dataBase.IDatabaseHandler
 import com.example.carpoint.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -17,8 +18,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class LogInViewModel @Inject constructor(
-    private val auth: IAuthentication
-) : ViewModel() {
+    private val auth: IAuthentication) : ViewModel() {
     private val _logInState = Channel<LogInState>()
     val logInState = _logInState.receiveAsFlow()
 

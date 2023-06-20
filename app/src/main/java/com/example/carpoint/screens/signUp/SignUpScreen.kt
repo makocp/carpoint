@@ -1,4 +1,4 @@
-package com.example.carpoint.Screens.SignUp
+package com.example.carpoint.screens.signUp
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -10,20 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.progressSemantics
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -36,15 +28,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.carpoint.R
+import com.example.carpoint.models.User
 import com.example.carpoint.utils.addClickableText
 import com.example.carpoint.utils.addDivider
 import com.example.carpoint.utils.addText
@@ -97,7 +84,7 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
         createButton(placeholderResId = R.string.createAccount, {
             if (password.equals(confirmPassword)) {
                 scope.launch {
-                    viewModel.createUser(email, password)
+                    viewModel.createAccount(email, password)
                 }
             }
         })
@@ -124,7 +111,7 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
                 )
             }
         } else if (state.value?.isSuccess?.isNotEmpty() == true) {
-            Toast.makeText(context, state.value?.isSuccess, Toast.LENGTH_SHORT).show()
+            viewModel.createUser(User(name = username, email = email, profileImage = ""))
             navController.navigate("dashboard")
         }
     }

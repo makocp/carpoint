@@ -1,4 +1,4 @@
-package com.example.carpoint.Screens.ResetPassword
+package com.example.carpoint.screens.resetPassword
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package com.example.carpoint.Screens.Dashboard.BottomBarNavigation
+package com.example.carpoint.screens.dashboard.BottomBarNavigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home

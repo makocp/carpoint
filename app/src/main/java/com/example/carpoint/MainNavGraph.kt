@@ -4,11 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.carpoint.Screens.Dashboard.DashboardScreen
-import com.example.carpoint.Screens.LogIn.LogInScreen
-import com.example.carpoint.Screens.ResetPassword.ResetPassword
-import com.example.carpoint.Screens.ResetPassword.ResetPasswordTransmission
-import com.example.carpoint.Screens.SignUp.SignUpScreen
+import com.example.carpoint.screens.dashboard.DashboardScreen
+import com.example.carpoint.screens.logIn.LogInScreen
+import com.example.carpoint.screens.resetPassword.ResetPassword
+import com.example.carpoint.screens.resetPassword.ResetPasswordTransmission
+import com.example.carpoint.screens.signUp.SignUpScreen
 
 @Composable
 fun MainNavGraph(navController: NavHostController){
