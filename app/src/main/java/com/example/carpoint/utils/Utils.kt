@@ -1,16 +1,23 @@
 package com.example.carpoint.utils
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.progressSemantics
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -30,6 +37,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
@@ -40,11 +48,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.carpoint.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlin.math.sin
 
 class Utils {
 }
@@ -58,8 +68,7 @@ fun addDivider(padding: Int) {
                 start = padding.dp,
                 end = padding.dp,
                 bottom = padding.dp
-            ) // Adjust the padding as needed
-            .fillMaxWidth() // Take the maximum available width
+            ).fillMaxWidth()
     )
 }
 
@@ -100,31 +109,27 @@ fun createTextField(
     value: String,
     onTextChanged: (String) -> Unit
 ) {
+    val gradientBorder = BorderStroke(
+        width = 2.dp,
+        brush = Brush.horizontalGradient(
+            colors = listOf(Color(0xFF1e88c1), Color(0x000000)),
+        )
+    )
+
     MaterialTheme {
         OutlinedTextField(
             modifier = Modifier
-                .padding(10.dp),
+                .padding(10.dp)
+                .height(TextFieldDefaults.MinHeight)
+                .width(280.dp)
+                .border(gradientBorder),
             value = value,
             leadingIcon = { Icon(imageVector = leadingIcon, contentDescription = "Icon") },
             onValueChange = onTextChanged,
-            placeholder = { Text(text = stringResource(placeholderResId)) }
+            placeholder = { Text(text = stringResource(placeholderResId)) },
+            singleLine = true
         )
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TextFieldComponent(value: String, onValueChange: (String) -> Unit) {
-    TextField(
-        value = value,
-        onValueChange = onValueChange,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp),
-        placeholder = {
-            Text(text = "Enter your text here")
-        }
-    )
 }
 
 
@@ -137,6 +142,14 @@ fun createPasswordField(
     onValueChange: (String) -> Unit
 ) {
     MaterialTheme {
+        val gradientBorder = BorderStroke(
+            width = 2.dp,
+            brush = Brush.horizontalGradient(
+                colors = listOf(Color(0xFF1e88c1), Color(0x000000)),
+            )
+        )
+
+
         var passwordVisibility by remember { mutableStateOf(false) }
 
         val icon = if (passwordVisibility)
@@ -145,11 +158,17 @@ fun createPasswordField(
             painterResource(id = R.drawable.hidden)
 
         OutlinedTextField(
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier
+                .padding(10.dp)
+                .width(280.dp)
+                .height(TextFieldDefaults.MinHeight)
+                .border(gradientBorder),
+
             value = value,
             leadingIcon = { Icon(imageVector = leadingIcon, contentDescription = "emailIcon") },
             onValueChange = onValueChange,
             placeholder = { Text(text = stringResource(placeholderResId)) },
+            singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password
             ),
@@ -177,7 +196,7 @@ fun createPasswordField(
 fun addText(@StringRes text: Int, fontsize: Int, color: Color) {
     Text(
         text = stringResource(id = text),
-        modifier = Modifier,
+        modifier = Modifier ,
         color = color,
         style = TextStyle(fontSize = fontsize.sp)
     )
@@ -208,4 +227,13 @@ fun indicateProgressing() {
                 .progressSemantics()
         )
     }
+}
+
+fun makeBorderForTextField(color: Color, color1: Color): BorderStroke {
+    return BorderStroke(
+        width = 2.dp,
+        brush = Brush.horizontalGradient(
+            colors = listOf(color, color),
+        )
+    )
 }
