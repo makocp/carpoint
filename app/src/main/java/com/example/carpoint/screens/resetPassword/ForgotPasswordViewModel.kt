@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class ForgotPasswordTransmissionViewModel @Inject constructor(
+class ForgotPasswordViewModel @Inject constructor(
     private val auth: IAuthentication
 ) : ViewModel() {
     fun sendResetEmail(email: String) {

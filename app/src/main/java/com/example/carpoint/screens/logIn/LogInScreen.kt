@@ -68,7 +68,7 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
             text = R.string.forgotPassword,
             fontsize = 15,
             color = Color(0xFF1e88c1),
-            { navController.navigate("resetpasswordTransmission") })
+            { navController.navigate("resetpassword") })
 
         createButton(R.string.logIn, { scope.launch { viewModel.loginUser(email, password) } })
 
@@ -84,7 +84,6 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
                 navController.navigate("dashboard")
             } else if (state.value?.isError?.isNotEmpty() == true) {
                 Toast.makeText(context, state.value?.isError, Toast.LENGTH_SHORT).show()
-
             }
         }
     }
