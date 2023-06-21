@@ -1,4 +1,4 @@
-package com.example.carpoint.Screens.LogIn
+package com.example.carpoint.screens.LogIn
 
 import android.widget.Toast
 import androidx.compose.foundation.background

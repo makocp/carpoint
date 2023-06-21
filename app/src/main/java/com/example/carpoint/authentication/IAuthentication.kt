@@ -26,5 +26,10 @@ interface IAuthentication {
      */
     fun createUser(email: String, password: String): Flow<Resource<AuthResult>>
 
-    fun sendResetPasswordMail(email: String)
+    /**
+     * Sends a reset password email to the specified email address.
+     *
+     * @param email The email address to which the reset password email will be sent.
+     */
+    fun sendResetPasswordMail(email: String) {}
 }

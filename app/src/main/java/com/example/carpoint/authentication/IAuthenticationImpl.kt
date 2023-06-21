@@ -51,6 +51,11 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    /**
+     * Sends a reset password email to the specified email address.
+     *
+     * @param email The email address to which the reset password email will be sent.
+     */
     override fun sendResetPasswordMail(email: String) {
         firebaseAuth.sendPasswordResetEmail(email)
     }
