@@ -1,14 +1,18 @@
 package com.example.carpoint.dataBase
 
+import android.content.ContentValues.TAG
 import android.graphics.BitmapFactory
 import android.util.Base64
+import android.util.Log
 import com.example.carpoint.dataBaseModels.NoteDb
 import com.example.carpoint.dataBaseModels.UserDb
 import com.example.carpoint.models.Note
 import com.example.carpoint.models.User
 import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 import javax.inject.Inject
 
 /**
@@ -79,12 +83,43 @@ class IDatabaseHandlerImpl @Inject constructor(
             .child("profileImage").setValue(base64Image)
     }
 
-    override fun createNote(note: NoteDb) {
+
+    override fun createNote(uid: String, note: NoteDb) {
         firebaseDatabase.goOnline()
-        val userRef = firebaseDatabase.getReference("notes")
-        val newRef = userRef.push()
-        newRef.setValue(note)
+        val noteRef = firebaseDatabase.getReference("notes").child(uid)
+        val newNote = noteRef.push()
+        newNote.setValue(note)
     }
+    override fun getNotes(uid: String, callback: (List<NoteDb>) -> Unit) {
+        val noteRef = firebaseDatabase.getReference("notes").child(uid)
+        val notesList = mutableListOf<NoteDb>()
 
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (noteSnapshot in dataSnapshot.children) {
+                    val noteId = noteSnapshot.key
+                    val noteData = noteSnapshot.value as? Map<*, *> // Retrieve the note data as a Map
 
+                    if (noteId != null && noteData != null) {
+                        val noteDate = noteData["date"] as? String
+                        val noteText = noteData["note"] as? String
+
+                        if (noteDate != null && noteText != null) {
+                            val note = NoteDb(noteDate, noteText)
+                            notesList.add(note)
+                        }
+                    }
+                }
+
+                // Invoke the callback with the populated notesList
+                callback(notesList)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+
+        noteRef.addListenerForSingleValueEvent(postListener)
+    }
 }

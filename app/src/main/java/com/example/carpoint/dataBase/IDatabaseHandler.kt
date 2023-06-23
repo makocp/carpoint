@@ -41,5 +41,6 @@ interface IDatabaseHandler {
     fun processImageFromDataBase(base64String: String)
     fun uploadImage(uid: String, base64Image: String)
 
-    fun createNote(note: NoteDb)
+    fun createNote(uid: String,note: NoteDb)
+    fun getNotes(uid : String,callback: (List<NoteDb>) -> Unit)
 }

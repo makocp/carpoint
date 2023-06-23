@@ -5,11 +5,13 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,6 +21,10 @@ import androidx.compose.foundation.progressSemantics
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.BottomSheetScaffold
+import androidx.compose.material.BottomSheetScaffoldState
+import androidx.compose.material.BottomSheetState
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.rounded.Add
@@ -62,7 +68,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.carpoint.R
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.NonDisposableHandle.parent
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddDivider(padding: Int) {
@@ -138,6 +146,34 @@ fun CreateTextField(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CreateInputField(
+    @StringRes placeholderResId: Int,
+    value: String,
+    onTextChanged: (String) -> Unit
+) {
+    val gradientBorder = BorderStroke(
+        width = 2.dp,
+        brush = Brush.horizontalGradient(
+            colors = listOf(Color(0xFF1e88c1), Color(0xFF000000)),
+        )
+    )
+
+    MaterialTheme {
+        OutlinedTextField(
+            modifier = Modifier
+                .padding(10.dp)
+                .height(TextFieldDefaults.MinHeight)
+                .width(280.dp)
+                .border(gradientBorder),
+            value = value,
+            onValueChange = onTextChanged,
+            placeholder = { Text(text = stringResource(placeholderResId)) },
+            singleLine = false
+        )
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -235,14 +271,6 @@ fun IndicateProgressing() {
     }
 }
 
-fun makeBorderForTextField(color: Color, color1: Color): BorderStroke {
-    return BorderStroke(
-        width = 2.dp,
-        brush = Brush.horizontalGradient(
-            colors = listOf(color, color),
-        )
-    )
-}
 
 @Composable
 fun NoteCard(date: String, note: String) {
@@ -292,7 +320,8 @@ fun SheetContent() {
 
 @Composable
 fun AddFloatingActionButton(
-    onClick: () -> Unit) {
+    onClick: () -> Unit
+) {
     FloatingActionButton(
         shape = RoundedCornerShape(50.dp),
         onClick = onClick,

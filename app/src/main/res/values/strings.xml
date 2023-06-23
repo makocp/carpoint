@@ -16,7 +16,10 @@
     <string name="enterNewPassword">Enter new Password</string>
     <string name="confirmNewPassword">Confirm new Password</string>
     <string name="submit">Submit</string>
-
     <string name="permissionGranted">Permission granted</string>
     <string name="permissiondenied">Permission denied</string>
+    <string name="addNote">Add Note</string>
+    <string name="enterYourNote">enter your note</string>
+    <string name="noNotesYet">No Notes Yet</string>
+
 </resources>
