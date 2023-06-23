@@ -1,6 +1,5 @@
 package com.example.carpoint.screens.signUp
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,20 +15,13 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import kotlinx.coroutines.launch
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.carpoint.R
 import com.example.carpoint.models.User
 import com.example.carpoint.utils.addClickableText
@@ -38,7 +30,7 @@ import com.example.carpoint.utils.addText
 import com.example.carpoint.utils.createButton
 import com.example.carpoint.utils.createPasswordField
 import com.example.carpoint.utils.createTextField
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,13 +72,13 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
             leadingIcon = Icons.Default.Lock,
             value = confirmPassword,
             onValueChange = { confirmPassword = it })
-        createButton(placeholderResId = R.string.createAccount, {
+        createButton(placeholderResId = R.string.createAccount) {
             if (password.equals(confirmPassword)) {
                 scope.launch {
                     viewModel.createAccount(email, password)
                 }
             }
-        })
+        }
         addDivider(padding = 30)
         Row {
             addText(text = R.string.alreadyHaveAccount, fontsize = 15, Color.Gray)

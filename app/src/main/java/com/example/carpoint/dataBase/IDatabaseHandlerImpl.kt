@@ -8,11 +8,11 @@ class IDatabaseHandlerImpl @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase
 ) : IDatabaseHandler {
 
-    override fun createUser(user: User) {
+    override fun createUser(uid: String, user: User) {
+        val userDb = UserDb(uid, user.name, user.email, user.profileImage)
         firebaseDatabase.goOnline()
-        val userRef = firebaseDatabase.getReference("users")
-        val newRef = userRef.push()
-        newRef.setValue(user)
+        val userRef = firebaseDatabase.getReference("users").child(uid)
+        userRef.setValue(userDb)
     }
 
     override fun editUser(user: User) {

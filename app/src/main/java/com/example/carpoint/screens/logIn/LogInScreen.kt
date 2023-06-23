@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -76,15 +77,21 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
 
         Row {
             addText(text = R.string.dontHaveAccount, fontsize = 15, Color.Gray)
-            addClickableText(text = R.string.signUp, fontsize = 15, color = Color(0xFF1e88c1), {navController.navigate("signup")})
+            addClickableText(
+                text = R.string.signUp,
+                fontsize = 15,
+                color = Color(0xFF1e88c1),
+                { navController.navigate("signup") })
 
             if (state.value?.isLoading == true) {
                 indicateProgressing()
-            } else if (state.value?.isSuccess?.isNotEmpty() == true) {
-                navController.navigate("dashboard")
-            } else if (state.value?.isError?.isNotEmpty() == true) {
-                Toast.makeText(context, state.value?.isError, Toast.LENGTH_SHORT).show()
-
+            }
+            LaunchedEffect(state.value) {
+                if (state.value?.isSuccess?.isNotEmpty() == true) {
+                    navController.navigate("dashboard")
+                } else if (state.value?.isError?.isNotEmpty() == true) {
+                    Toast.makeText(context, state.value?.isError, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
