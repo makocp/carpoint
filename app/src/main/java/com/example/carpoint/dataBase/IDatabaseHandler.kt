@@ -9,9 +9,10 @@ interface IDatabaseHandler {
     /**
      * Creates a new user in the database.
      *
+     * @param uid The Firebase Auth Uid.
      * @param user The user object to be created.
      */
-    fun createUser(user: User)
+    fun createUser(uid: String, user: User)
 
     /**
      * Edits an existing user in the database.
@@ -34,4 +35,7 @@ interface IDatabaseHandler {
      * @return The user object corresponding to the provided email address.
      */
     fun getUser(email: String): User
+    fun getUserImage(uid: String)
+    fun processImageFromDataBase(base64String: String)
+    fun uploadImage(uid: String, base64Image: String)
 }

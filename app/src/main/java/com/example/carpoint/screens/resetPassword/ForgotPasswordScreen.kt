@@ -18,9 +18,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.carpoint.R
-import com.example.carpoint.utils.createButton
-import com.example.carpoint.utils.createTextField
-import com.example.carpoint.utils.displayLogo
+import com.example.carpoint.utils.CreateButton
+import com.example.carpoint.utils.CreateTextField
+import com.example.carpoint.utils.DisplayLogo
 import kotlinx.coroutines.launch
 
 @Composable
@@ -37,13 +37,13 @@ fun ForgotPasswordScreen(
             .fillMaxSize()
             .background(Color.White)
     ) {
-        displayLogo()
-        createTextField(
+        DisplayLogo()
+        CreateTextField(
             placeholderResId = R.string.enterYourEmail,
             leadingIcon = Icons.Default.Email,
             email,
             { email = it })
-        createButton(placeholderResId = R.string.submit
+        CreateButton(placeholderResId = R.string.submit
         ) {
             if (email.isNotEmpty()) {
                 scope.launch {

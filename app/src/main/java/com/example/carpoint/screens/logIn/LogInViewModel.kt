@@ -3,7 +3,6 @@ package com.example.carpoint.screens.logIn
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.carpoint.authentication.IAuthentication
-import com.example.carpoint.dataBase.IDatabaseHandler
 import com.example.carpoint.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel

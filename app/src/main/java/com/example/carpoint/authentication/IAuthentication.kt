@@ -32,4 +32,6 @@ interface IAuthentication {
      * @param email The email address to which the reset password email will be sent.
      */
     fun sendResetPasswordMail(email: String) {}
+
+    fun getCurrentUserIdFromAuth(): String?
 }

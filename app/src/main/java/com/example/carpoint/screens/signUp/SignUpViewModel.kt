@@ -22,6 +22,7 @@ class SignUpViewModel @Inject constructor(
     private val auth: IAuthentication,
     private val database: IDatabaseHandler) : ViewModel() {
     private val _signUpState = Channel<SignUpState>()
+    private var createdUid = ""
     val signUpState = _signUpState.receiveAsFlow()
 
     /**
@@ -32,6 +33,7 @@ class SignUpViewModel @Inject constructor(
      */
     fun createAccount(email: String, password: String) = viewModelScope.launch {
         auth.createUser(email, password).collect { result ->
+            createdUid = result.data?.user?.uid.toString()
             when (result) {
                 is Resource.success -> {
                     _signUpState.send(SignUpState(isSuccess = "Created Account Successfully"))
@@ -47,6 +49,6 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun createUser(user: User){
-        database.createUser(user)
+        database.createUser(createdUid ,user)
     }
 }

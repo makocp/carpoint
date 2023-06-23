@@ -5,7 +5,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,11 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.progressSemantics
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -28,7 +24,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,21 +41,13 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.carpoint.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import kotlin.math.sin
-
-class Utils {
-}
 
 @Composable
-fun addDivider(padding: Int) {
+fun AddDivider(padding: Int) {
     Divider(
         color = Color.Black,
         modifier = Modifier
@@ -74,7 +61,7 @@ fun addDivider(padding: Int) {
 
 
 @Composable
-fun displayLogo() {
+fun DisplayLogo() {
     MaterialTheme {
         Image(
             modifier = Modifier
@@ -87,7 +74,7 @@ fun displayLogo() {
 
 
 @Composable
-fun createButton(@StringRes placeholderResId: Int, onClick: () -> Unit) {
+fun CreateButton(@StringRes placeholderResId: Int, onClick: () -> Unit) {
 
     MaterialTheme() {
         Button(
@@ -103,7 +90,7 @@ fun createButton(@StringRes placeholderResId: Int, onClick: () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun createTextField(
+fun CreateTextField(
     @StringRes placeholderResId: Int,
     leadingIcon: ImageVector,
     value: String,
@@ -112,7 +99,7 @@ fun createTextField(
     val gradientBorder = BorderStroke(
         width = 2.dp,
         brush = Brush.horizontalGradient(
-            colors = listOf(Color(0xFF1e88c1), Color(0x000000)),
+            colors = listOf(Color(0xFF1e88c1), Color(0xFF000000)),
         )
     )
 
@@ -135,7 +122,7 @@ fun createTextField(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun createPasswordField(
+fun CreatePasswordField(
     @StringRes placeholderResId: Int,
     leadingIcon: ImageVector,
     value: String,
@@ -145,7 +132,7 @@ fun createPasswordField(
         val gradientBorder = BorderStroke(
             width = 2.dp,
             brush = Brush.horizontalGradient(
-                colors = listOf(Color(0xFF1e88c1), Color(0x000000)),
+                colors = listOf(Color(0xFF1e88c1), Color(0xFF000000)),
             )
         )
 
@@ -193,7 +180,7 @@ fun createPasswordField(
 
 
 @Composable
-fun addText(@StringRes text: Int, fontsize: Int, color: Color) {
+fun AddText(@StringRes text: Int, fontsize: Int, color: Color) {
     Text(
         text = stringResource(id = text),
         modifier = Modifier ,
@@ -203,7 +190,7 @@ fun addText(@StringRes text: Int, fontsize: Int, color: Color) {
 }
 
 @Composable
-fun addClickableText(@StringRes text: Int, fontsize: Int, color: Color, onClick: (Int) -> Unit) {
+fun AddClickableText(@StringRes text: Int, fontsize: Int, color: Color, onClick: (Int) -> Unit) {
     ClickableText(
         text = AnnotatedString(stringResource(text)),
         style = TextStyle(color = color, fontSize = fontsize.sp),
@@ -214,7 +201,7 @@ fun addClickableText(@StringRes text: Int, fontsize: Int, color: Color, onClick:
 }
 
 @Composable
-fun indicateProgressing() {
+fun IndicateProgressing() {
     Box(
         modifier = Modifier
             .background(Color.White)

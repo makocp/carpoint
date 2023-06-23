@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.carpoint.screens.dashboard.HomeScreen
-import com.example.carpoint.screens.dashboard.ProfileScreen
-import com.example.carpoint.screens.dashboard.SettingsScreen
+import com.example.carpoint.Screens.Dashboard.HomeScreen.HomeScreen
+import com.example.carpoint.Screens.Dashboard.ProfileScreen.ProfileScreen
+import com.example.carpoint.Screens.Dashboard.SettingsScreen.SettingsScreen
 
 @Composable
 fun BottomNavGraph(

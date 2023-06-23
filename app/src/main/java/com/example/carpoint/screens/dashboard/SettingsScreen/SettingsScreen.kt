@@ -1,4 +1,4 @@
-package com.example.carpoint.screens.dashboard
+package com.example.carpoint.Screens.Dashboard.SettingsScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,41 +10,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun HomeScreen() {
+fun SettingsScreen(){
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Blue),
+            .background(Color.Yellow),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Home",
+            text = "Settings",
             fontSize = 100.sp,
             fontWeight = FontWeight.Bold
         )
     }
 }
-
-@Preview
-@Composable
-fun ProfileView() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Blue),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Home",
-            fontSize = 100.sp,
-            fontWeight = FontWeight.Bold
-        )
-    }
-}
-
