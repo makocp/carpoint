@@ -24,12 +24,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.carpoint.R
 import com.example.carpoint.models.User
-import com.example.carpoint.utils.addClickableText
-import com.example.carpoint.utils.addDivider
-import com.example.carpoint.utils.addText
-import com.example.carpoint.utils.createButton
-import com.example.carpoint.utils.createPasswordField
-import com.example.carpoint.utils.createTextField
+import com.example.carpoint.utils.AddClickableText
+import com.example.carpoint.utils.AddDivider
+import com.example.carpoint.utils.AddText
+import com.example.carpoint.utils.CreateButton
+import com.example.carpoint.utils.CreatePasswordField
+import com.example.carpoint.utils.CreateTextField
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,38 +51,38 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        addText(text = R.string.createAccount, fontsize = 30, color = Color.Black)
-        createTextField(
+        AddText(text = R.string.createAccount, fontsize = 30, color = Color.Black)
+        CreateTextField(
             placeholderResId = R.string.email,
             leadingIcon = Icons.Default.Email,
             value = email,
             onTextChanged = { email = it })
-        createTextField(
+        CreateTextField(
             placeholderResId = R.string.Username,
             leadingIcon = Icons.Default.Person,
             value = username,
             onTextChanged = { username = it })
-        createPasswordField(
+        CreatePasswordField(
             placeholderResId = R.string.password,
             leadingIcon = Icons.Default.Lock,
             value = password,
             onValueChange = { password = it })
-        createPasswordField(
+        CreatePasswordField(
             placeholderResId = R.string.confirmPassword,
             leadingIcon = Icons.Default.Lock,
             value = confirmPassword,
             onValueChange = { confirmPassword = it })
-        createButton(placeholderResId = R.string.createAccount) {
+        CreateButton(placeholderResId = R.string.createAccount) {
             if (password.equals(confirmPassword)) {
                 scope.launch {
                     viewModel.createAccount(email, password)
                 }
             }
         }
-        addDivider(padding = 30)
+        AddDivider(padding = 30)
         Row {
-            addText(text = R.string.alreadyHaveAccount, fontsize = 15, Color.Gray)
-            addClickableText(
+            AddText(text = R.string.alreadyHaveAccount, fontsize = 15, Color.Gray)
+            AddClickableText(
                 text = R.string.logIn,
                 fontsize = 15,
                 color = Color(0xFF1e88c1),
