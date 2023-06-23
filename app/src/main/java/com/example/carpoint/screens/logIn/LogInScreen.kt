@@ -25,14 +25,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.carpoint.R
 import com.example.carpoint.screens.logIn.LogInViewModel
-import com.example.carpoint.utils.addClickableText
-import com.example.carpoint.utils.addDivider
-import com.example.carpoint.utils.addText
-import com.example.carpoint.utils.createButton
-import com.example.carpoint.utils.createPasswordField
-import com.example.carpoint.utils.createTextField
-import com.example.carpoint.utils.displayLogo
-import com.example.carpoint.utils.indicateProgressing
+import com.example.carpoint.utils.AddClickableText
+import com.example.carpoint.utils.AddDivider
+import com.example.carpoint.utils.AddText
+import com.example.carpoint.utils.CreateButton
+import com.example.carpoint.utils.CreatePasswordField
+import com.example.carpoint.utils.CreateTextField
+import com.example.carpoint.utils.DisplayLogo
+import com.example.carpoint.utils.IndicateProgressing
 import kotlinx.coroutines.launch
 
 
@@ -51,40 +51,40 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
         val scope = rememberCoroutineScope()
         val state = viewModel.logInState.collectAsState(initial = null)
         val context = LocalContext.current
-        displayLogo()
-        addText(text = R.string.logIn, fontsize = 30, color = Color.Black)
-        createTextField(
+        DisplayLogo()
+        AddText(text = R.string.logIn, fontsize = 30, color = Color.Black)
+        CreateTextField(
             placeholderResId = R.string.email,
             leadingIcon = Icons.Default.Email,
             value = email,
             onTextChanged = { email = it })
 
-        createPasswordField(
+        CreatePasswordField(
             placeholderResId = R.string.password,
             leadingIcon = Icons.Default.Lock,
             value = password,
             onValueChange = { password = it })
 
-        addClickableText(
+        AddClickableText(
             text = R.string.forgotPassword,
             fontsize = 15,
             color = Color(0xFF1e88c1),
-            { navController.navigate("resetpasswordTransmission") })
+            { navController.navigate("resetpassword") })
 
-        createButton(R.string.logIn, { scope.launch { viewModel.loginUser(email, password) } })
+        CreateButton(R.string.logIn, { scope.launch { viewModel.loginUser(email, password) } })
 
-        addDivider(padding = 30)
+        AddDivider(padding = 30)
 
         Row {
-            addText(text = R.string.dontHaveAccount, fontsize = 15, Color.Gray)
-            addClickableText(
+            AddText(text = R.string.dontHaveAccount, fontsize = 15, Color.Gray)
+            AddClickableText(
                 text = R.string.signUp,
                 fontsize = 15,
                 color = Color(0xFF1e88c1),
                 { navController.navigate("signup") })
 
             if (state.value?.isLoading == true) {
-                indicateProgressing()
+                IndicateProgressing()
             }
             LaunchedEffect(state.value) {
                 if (state.value?.isSuccess?.isNotEmpty() == true) {

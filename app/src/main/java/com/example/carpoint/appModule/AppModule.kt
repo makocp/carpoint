@@ -26,10 +26,9 @@ object AppModule {
      */
     @Provides
     @Singleton
-    fun providesFirebaseAuth() = FirebaseAuth.getInstance()
-
-
-
+    fun providesFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
+    }
 
     /**
      * Provides an implementation of [IAuthentication] interface using [AuthRepositoryImpl].
@@ -43,15 +42,26 @@ object AppModule {
         return AuthRepositoryImpl(firebaseAuth)
     }
 
-
+    /**
+     * Provides an instance of [FirebaseDatabase] for Firebase database operations.
+     *
+     * @return An instance of [FirebaseDatabase].
+     */
     @Provides
     @Singleton
-    fun providesFirebaseDatabase() = FirebaseDatabase.getInstance()
+    fun providesFirebaseDatabase(): FirebaseDatabase {
+        return FirebaseDatabase.getInstance()
+    }
 
+    /**
+     * Provides an implementation of [IDatabaseHandler] interface using [IDatabaseHandlerImpl].
+     *
+     * @param firebaseDatabase The instance of [FirebaseDatabase] for database operations.
+     * @return An instance of [IDatabaseHandlerImpl] implementing [IDatabaseHandler].
+     */
     @Provides
     @Singleton
     fun providesDatabaseImpl(firebaseDatabase: FirebaseDatabase): IDatabaseHandler {
         return IDatabaseHandlerImpl(firebaseDatabase)
     }
-
 }

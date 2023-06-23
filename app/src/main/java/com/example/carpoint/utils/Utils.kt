@@ -1,13 +1,16 @@
 package com.example.carpoint.utils
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.progressSemantics
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
@@ -21,7 +24,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
@@ -38,19 +41,13 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.carpoint.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-
-class Utils {
-}
 
 @Composable
-fun addDivider(padding: Int) {
+fun AddDivider(padding: Int) {
     Divider(
         color = Color.Black,
         modifier = Modifier
@@ -58,14 +55,13 @@ fun addDivider(padding: Int) {
                 start = padding.dp,
                 end = padding.dp,
                 bottom = padding.dp
-            ) // Adjust the padding as needed
-            .fillMaxWidth() // Take the maximum available width
+            ).fillMaxWidth()
     )
 }
 
 
 @Composable
-fun displayLogo() {
+fun DisplayLogo() {
     MaterialTheme {
         Image(
             modifier = Modifier
@@ -78,7 +74,7 @@ fun displayLogo() {
 
 
 @Composable
-fun createButton(@StringRes placeholderResId: Int, onClick: () -> Unit) {
+fun CreateButton(@StringRes placeholderResId: Int, onClick: () -> Unit) {
 
     MaterialTheme() {
         Button(
@@ -94,49 +90,53 @@ fun createButton(@StringRes placeholderResId: Int, onClick: () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun createTextField(
+fun CreateTextField(
     @StringRes placeholderResId: Int,
     leadingIcon: ImageVector,
     value: String,
     onTextChanged: (String) -> Unit
 ) {
+    val gradientBorder = BorderStroke(
+        width = 2.dp,
+        brush = Brush.horizontalGradient(
+            colors = listOf(Color(0xFF1e88c1), Color(0xFF000000)),
+        )
+    )
+
     MaterialTheme {
         OutlinedTextField(
             modifier = Modifier
-                .padding(10.dp),
+                .padding(10.dp)
+                .height(TextFieldDefaults.MinHeight)
+                .width(280.dp)
+                .border(gradientBorder),
             value = value,
             leadingIcon = { Icon(imageVector = leadingIcon, contentDescription = "Icon") },
             onValueChange = onTextChanged,
-            placeholder = { Text(text = stringResource(placeholderResId)) }
+            placeholder = { Text(text = stringResource(placeholderResId)) },
+            singleLine = true
         )
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TextFieldComponent(value: String, onValueChange: (String) -> Unit) {
-    TextField(
-        value = value,
-        onValueChange = onValueChange,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp),
-        placeholder = {
-            Text(text = "Enter your text here")
-        }
-    )
-}
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun createPasswordField(
+fun CreatePasswordField(
     @StringRes placeholderResId: Int,
     leadingIcon: ImageVector,
     value: String,
     onValueChange: (String) -> Unit
 ) {
     MaterialTheme {
+        val gradientBorder = BorderStroke(
+            width = 2.dp,
+            brush = Brush.horizontalGradient(
+                colors = listOf(Color(0xFF1e88c1), Color(0xFF000000)),
+            )
+        )
+
+
         var passwordVisibility by remember { mutableStateOf(false) }
 
         val icon = if (passwordVisibility)
@@ -145,11 +145,17 @@ fun createPasswordField(
             painterResource(id = R.drawable.hidden)
 
         OutlinedTextField(
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier
+                .padding(10.dp)
+                .width(280.dp)
+                .height(TextFieldDefaults.MinHeight)
+                .border(gradientBorder),
+
             value = value,
             leadingIcon = { Icon(imageVector = leadingIcon, contentDescription = "emailIcon") },
             onValueChange = onValueChange,
             placeholder = { Text(text = stringResource(placeholderResId)) },
+            singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password
             ),
@@ -174,17 +180,17 @@ fun createPasswordField(
 
 
 @Composable
-fun addText(@StringRes text: Int, fontsize: Int, color: Color) {
+fun AddText(@StringRes text: Int, fontsize: Int, color: Color) {
     Text(
         text = stringResource(id = text),
-        modifier = Modifier,
+        modifier = Modifier ,
         color = color,
         style = TextStyle(fontSize = fontsize.sp)
     )
 }
 
 @Composable
-fun addClickableText(@StringRes text: Int, fontsize: Int, color: Color, onClick: (Int) -> Unit) {
+fun AddClickableText(@StringRes text: Int, fontsize: Int, color: Color, onClick: (Int) -> Unit) {
     ClickableText(
         text = AnnotatedString(stringResource(text)),
         style = TextStyle(color = color, fontSize = fontsize.sp),
@@ -195,7 +201,7 @@ fun addClickableText(@StringRes text: Int, fontsize: Int, color: Color, onClick:
 }
 
 @Composable
-fun indicateProgressing() {
+fun IndicateProgressing() {
     Box(
         modifier = Modifier
             .background(Color.White)
@@ -208,4 +214,13 @@ fun indicateProgressing() {
                 .progressSemantics()
         )
     }
+}
+
+fun makeBorderForTextField(color: Color, color1: Color): BorderStroke {
+    return BorderStroke(
+        width = 2.dp,
+        brush = Brush.horizontalGradient(
+            colors = listOf(color, color),
+        )
+    )
 }
