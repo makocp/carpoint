@@ -2,9 +2,13 @@ package com.example.carpoint.dataBase
 
 import android.graphics.BitmapFactory
 import android.util.Base64
+import com.example.carpoint.dataBaseModels.NoteDb
 import com.example.carpoint.dataBaseModels.UserDb
+import com.example.carpoint.models.Note
 import com.example.carpoint.models.User
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import javax.inject.Inject
 
 /**
@@ -66,7 +70,7 @@ class IDatabaseHandlerImpl @Inject constructor(
 
     override fun processImageFromDataBase(base64String: String) {
         val decodeBytes = Base64.decode(base64String, Base64.DEFAULT)
-        var bitmap = BitmapFactory.decodeByteArray(decodeBytes,0,decodeBytes.size)
+        var bitmap = BitmapFactory.decodeByteArray(decodeBytes, 0, decodeBytes.size)
     }
 
     override fun uploadImage(uid: String, base64Image: String) {
@@ -74,4 +78,13 @@ class IDatabaseHandlerImpl @Inject constructor(
         firebaseDatabase.reference.child("users").child(uid)
             .child("profileImage").setValue(base64Image)
     }
+
+    override fun createNote(note: NoteDb) {
+        firebaseDatabase.goOnline()
+        val userRef = firebaseDatabase.getReference("notes")
+        val newRef = userRef.push()
+        newRef.setValue(note)
+    }
+
+
 }
