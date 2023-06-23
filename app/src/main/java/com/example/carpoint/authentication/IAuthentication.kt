@@ -27,4 +27,6 @@ interface IAuthentication {
     fun createUser(email: String, password: String): Flow<Resource<AuthResult>>
 
     fun sendResetPasswordMail(email: String)
+
+    fun getCurrentUserIdFromAuth(): String?
 }

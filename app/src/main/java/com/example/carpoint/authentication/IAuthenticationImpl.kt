@@ -54,4 +54,8 @@ class AuthRepositoryImpl @Inject constructor(
     override fun sendResetPasswordMail(email: String) {
         firebaseAuth.sendPasswordResetEmail(email)
     }
+
+    override fun getCurrentUserIdFromAuth(): String? {
+        return firebaseAuth.currentUser?.uid
+    }
 }
