@@ -7,4 +7,7 @@ interface IDatabaseHandler {
     fun editUser(user: User)
     fun deleteUser(email: String)
     fun getUser(email: String): User
+    fun getUserImage(uid: String)
+    fun processImageFromDataBase(base64String: String)
+    fun uploadImage(uid: String, base64Image: String)
 }
