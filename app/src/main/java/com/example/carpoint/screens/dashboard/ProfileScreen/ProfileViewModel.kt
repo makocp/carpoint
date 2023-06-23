@@ -1,4 +1,4 @@
-package com.example.carpoint.Screens.Dashboard.ProfileScreen
+package com.example.carpoint.screens.Dashboard.ProfileScreen
 
 import android.content.Context
 import android.graphics.Bitmap

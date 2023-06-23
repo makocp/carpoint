@@ -19,11 +19,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.carpoint.R
 import com.example.carpoint.models.User
+import com.example.carpoint.sharedPreferences.SharedPreferences
 import com.example.carpoint.utils.AddClickableText
 import com.example.carpoint.utils.AddDivider
 import com.example.carpoint.utils.AddText
@@ -43,7 +46,9 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
-
+    // SharedPref for Login State is here created/declared.
+    val loginSharedPref =
+        LocalContext.current.getSharedPreferences(SharedPreferences.LOGIN_PREF.prefName, 0)
 
 
     Column(
@@ -105,7 +110,22 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
             LaunchedEffect(state.value) {
                 if (state.value?.isSuccess?.isNotEmpty() == true) {
                     viewModel.createUser(User(name = username, email = email, profileImage = ""))
-                    navController.navigate("dashboard")
+                    navController.navigate("dashboard") {
+                        // Pops to start destination before navigating.
+                        // -> If user is on Home Screen and goes back -> he goes directly to login and not create account.
+                        popUpTo(navController.graph.findStartDestination().id)
+                        // Allows only one copy of the same Screen on top of backstack.
+                        launchSingleTop = true
+                        // Put in the current User Id into Shared Preference to check later on, if logged in.
+                        // Before writing the UID to Shared Preferences, it gets cleared/all logins removed.
+                        // Gets reseted, when Shared Preferences get deleted (Application Reinstallation) or at Logout.
+                        with(loginSharedPref.edit()) {
+                            clear()
+                            apply()
+                            putString("loggedIn", viewModel.getCurrentUserId())
+                            apply()
+                        }
+                    }
                 }
             }
         }

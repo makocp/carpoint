@@ -1,9 +1,8 @@
-package com.example.carpoint.Screens.Dashboard.ProfileScreen
+package com.example.carpoint.screens.Dashboard.ProfileScreen
 
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -38,7 +37,6 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
 
     // Context persists in app, after restart -> different context.
     val context = LocalContext.current
-    Log.d("PICTURE_CONTEXT", context.toString())
     // Retrieve sharedPreferences object.
     // If no object -> gets created.
     val profilePref = remember {

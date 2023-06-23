@@ -24,7 +24,7 @@ import com.example.carpoint.screens.dashboard.BottomBarNavigation.BottomNavObjec
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardScreen() {
+fun DashboardScreen(navControllerMain: NavHostController) {
     val navController = rememberNavController()
 
     // This is the manually created list.
@@ -47,7 +47,7 @@ fun DashboardScreen() {
             BottomBar(navController = navController, bottomNavObjects)
         }
     ) {
-        BottomNavGraph(navController)
+        BottomNavGraph(navController, navControllerMain)
     }
 }
 
@@ -95,7 +95,6 @@ fun RowScope.AddItem(
                 popUpTo(navController.graph.findStartDestination().id)
 
                 // Allows only one copy of the same Screen on top of backstack.
-                // TODO: View Live Backstack
                 launchSingleTop = true
             }
         }

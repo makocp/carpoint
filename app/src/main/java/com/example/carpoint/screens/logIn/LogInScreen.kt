@@ -1,11 +1,14 @@
-package com.example.carpoint.Screens.LogIn
+package com.example.carpoint.screens.LogIn
 
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -37,7 +40,16 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltViewModel()) {
+fun LogInScreen(
+    navController: NavController,
+    viewModel: LogInViewModel = hiltViewModel()
+) {
+
+    val loginSharedPref =
+        LocalContext.current.getSharedPreferences(
+            com.example.carpoint.sharedPreferences.SharedPreferences.LOGIN_PREF.prefName,
+            0
+        )
 
     Column(
         verticalArrangement = Arrangement.Center,
@@ -45,6 +57,7 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
+            .scrollable(rememberScrollState(), Orientation.Vertical)
     ) {
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
@@ -71,7 +84,9 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
             color = Color(0xFF1e88c1),
             { navController.navigate("resetpassword") })
 
-        CreateButton(R.string.logIn, { scope.launch { viewModel.loginUser(email, password) } })
+        CreateButton(R.string.logIn, {
+            scope.launch { viewModel.loginUser(email, password) }
+        })
 
         AddDivider(padding = 30)
 
@@ -86,11 +101,27 @@ fun LogInScreen(navController: NavController, viewModel: LogInViewModel = hiltVi
             if (state.value?.isLoading == true) {
                 IndicateProgressing()
             }
+            if (state.value?.isSuccess?.isNotEmpty() == true) {
+                navController.navigate("dashboard") {
+                    // Allows only one copy of the same Screen on top of backstack.
+                    launchSingleTop = true
+                    // Put in the current User Id into Shared Preference to check later on, if logged in.
+                    // Before writing the UID to Shared Preferences, it gets cleared/all logins removed.
+                    // Gets reseted, when Shared Preferences get deleted (Application Reinstallation) or at Logout.
+                    with(loginSharedPref.edit()) {
+                        clear()
+                        apply()
+                        putString("loggedIn", viewModel.getCurrentUserId())
+                        apply()
+                    }
+                }
+            } else if (state.value?.isError?.isNotEmpty() == true) {
+                Toast.makeText(context, state.value?.isError, Toast.LENGTH_SHORT).show()
+            }
             LaunchedEffect(state.value) {
-                if (state.value?.isSuccess?.isNotEmpty() == true) {
+                // TODO: Loading animation, until if task finished. Or: This here gets FIRST started, bevore composition of other components. (do disable showing login screen -> directly to dashboard.)
+                if (loginSharedPref.contains("loggedIn")) {
                     navController.navigate("dashboard")
-                } else if (state.value?.isError?.isNotEmpty() == true) {
-                    Toast.makeText(context, state.value?.isError, Toast.LENGTH_SHORT).show()
                 }
             }
         }
