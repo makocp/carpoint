@@ -1,4 +1,4 @@
-package com.example.carpoint.Screens.Dashboard.HomeScreen
+package com.example.carpoint.screens.Dashboard.HomeScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

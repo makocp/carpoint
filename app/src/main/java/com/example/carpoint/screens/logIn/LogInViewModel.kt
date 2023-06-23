@@ -42,4 +42,12 @@ class LogInViewModel @Inject constructor(
             }
         }
     }
+
+    fun getCurrentUserId(): String {
+        val userId = auth.getCurrentUserIdFromAuth()
+        if (userId != null) {
+            return userId
+        }
+        return ""
+    }
 }

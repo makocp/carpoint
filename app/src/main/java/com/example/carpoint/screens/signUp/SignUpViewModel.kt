@@ -51,4 +51,12 @@ class SignUpViewModel @Inject constructor(
     fun createUser(user: User){
         database.createUser(createdUid ,user)
     }
+
+    fun getCurrentUserId(): String {
+        val userId = auth.getCurrentUserIdFromAuth()
+        if (userId != null) {
+            return userId
+        }
+        return ""
+    }
 }
