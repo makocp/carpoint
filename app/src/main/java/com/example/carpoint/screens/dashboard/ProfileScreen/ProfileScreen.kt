@@ -42,9 +42,8 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
     // Retrieve sharedPreferences object.
     // If no object -> gets created.
     val profilePref = remember {
-        context.getSharedPreferences(SharedPreferences.PICTURE_PREF.toString(),0)
+        context.getSharedPreferences(SharedPreferences.PROFILE_PICTURE_PREF.prefName,0)
     }
-    Log.d("PICTURE",SharedPreferences.PICTURE_PREF.toString())
     // Sets the Shared Preferences key -> Current UserId
     val profileKey1 = remember { viewModel.getCurrentUserId() }
     // Get the picture Uri as a String from shared preferences, if the key is not found -> uri = null.
