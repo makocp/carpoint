@@ -21,5 +21,8 @@
     <string name="addNote">Add Note</string>
     <string name="enterYourNote">enter your note</string>
     <string name="noNotesYet">No Notes Yet</string>
+    <string name="settings">settings</string>
+    <string name="profile">profile</string>
+    <string name="home">home</string>
 
 </resources>
