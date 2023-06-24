@@ -25,4 +25,7 @@
     <string name="settings">Einstellungen</string>
     <string name="profile">profil</string>
     <string name="home">home</string>
+    <string name="signout">abmelden</string>
+    <string name="changepassword">passwort ändern</string>
+
 </resources>

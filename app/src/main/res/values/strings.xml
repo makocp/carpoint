@@ -24,5 +24,7 @@
     <string name="settings">settings</string>
     <string name="profile">profile</string>
     <string name="home">home</string>
+    <string name="signout">log out</string>
+    <string name="changepassword">change password</string>
 
 </resources>
