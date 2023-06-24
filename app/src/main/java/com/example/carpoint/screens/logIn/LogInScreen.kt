@@ -112,6 +112,7 @@ fun LogInScreen(
                         clear()
                         apply()
                         putString("loggedIn", viewModel.getCurrentUserId())
+                        putString("email", email)
                         apply()
                     }
                 }

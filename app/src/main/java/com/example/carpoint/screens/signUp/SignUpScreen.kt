@@ -123,6 +123,7 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
                             clear()
                             apply()
                             putString("loggedIn", viewModel.getCurrentUserId())
+                            putString("email", email)
                             apply()
                         }
                     }
