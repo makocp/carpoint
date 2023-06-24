@@ -3,6 +3,7 @@ package com.example.carpoint.screens.Dashboard.ProfileScreen
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -14,6 +15,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,6 +24,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,13 +35,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.carpoint.R
+import com.example.carpoint.dataBaseModels.UserDb
 import com.example.carpoint.models.Note
 import com.example.carpoint.sharedPreferences.SharedPreferences
+import com.example.carpoint.utils.AddText
 import com.example.carpoint.utils.CreateButton
 import com.example.carpoint.utils.SheetContent
 import kotlinx.coroutines.launch
@@ -48,7 +55,9 @@ import java.util.Date
 fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
 
     val scope = rememberCoroutineScope()
-
+    var user by remember {
+        mutableStateOf(UserDb("", "", "", ""))
+    }
 
 
     // Context persists in app, after restart -> different context.
@@ -137,6 +146,23 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
                     }
                 }
                 .fillMaxSize())
+        }
+        Row(
+            modifier = Modifier
+                .padding(0.dp,20.dp,0.dp,0.dp)
+        ) {
+            AddText(text = R.string.email, fontsize = 20, color = Color.Gray)
+            Text(text = ": " + user.email, style = TextStyle(fontSize = 20.sp))
+        }
+        Row(
+            modifier = Modifier
+                .padding(0.dp,20.dp,0.dp,0.dp)
+        )  {
+            AddText(text = R.string.Username, fontsize = 20, color = Color.Gray)
+            Text(text = ": " + user.name, style = TextStyle(fontSize = 20.sp))
+        }
+        LaunchedEffect(Unit) {
+            user = viewModel.getUser()
         }
     }
 }

@@ -66,8 +66,7 @@ fun HomeScreen(
     var note by remember { mutableStateOf("") }
     var notes: MutableList<NoteDb> by mutableStateOf(mutableListOf())
 
-    val loginSharedPref =
-        LocalContext.current.getSharedPreferences(SharedPreferences.LOGIN_PREF.prefName, 0)
+
     Scaffold(
         scaffoldState = scaffoldState,
         modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 50.dp),
@@ -115,7 +114,6 @@ fun HomeScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     scope.launch {
-                        Log.d("test", "A")
                         notes = viewModel.getNotes().toMutableList()
                     }
                     if (notes.isEmpty()) {
