@@ -17,7 +17,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class LogInViewModel @Inject constructor(
-    private val auth: IAuthentication) : ViewModel() {
+    private val auth: IAuthentication
+) : ViewModel() {
     private val _logInState = Channel<LogInState>()
     val logInState = _logInState.receiveAsFlow()
 
@@ -33,9 +34,11 @@ class LogInViewModel @Inject constructor(
                 is Resource.success -> {
                     _logInState.send(LogInState(isSuccess = "Sign In Success"))
                 }
+
                 is Resource.loading -> {
                     _logInState.send(LogInState(isLoading = true))
                 }
+
                 is Resource.error -> {
                     _logInState.send(LogInState(isError = "Something went wrong!"))
                 }

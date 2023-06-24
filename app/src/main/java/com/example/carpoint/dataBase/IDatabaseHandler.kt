@@ -1,5 +1,7 @@
 package com.example.carpoint.dataBase
 
+import com.example.carpoint.dataBaseModels.NoteDb
+import com.example.carpoint.models.Note
 import com.example.carpoint.models.User
 
 /**
@@ -38,4 +40,7 @@ interface IDatabaseHandler {
     fun getUserImage(uid: String)
     fun processImageFromDataBase(base64String: String)
     fun uploadImage(uid: String, base64Image: String)
+
+    fun createNote(uid: String,note: NoteDb)
+    fun getNotes(uid : String,callback: (List<NoteDb>) -> Unit)
 }

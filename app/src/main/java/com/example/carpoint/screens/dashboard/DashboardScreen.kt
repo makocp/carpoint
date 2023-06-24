@@ -1,6 +1,7 @@
 package com.example.carpoint.screens.dashboard
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -12,6 +13,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -56,13 +59,17 @@ fun BottomBar(navController: NavHostController, bottomNavObjects: List<BottomNav
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    BottomNavigation() {
+    BottomNavigation(
+        backgroundColor = Color(0xFF1e88c1),
+    ) {
         bottomNavObjects.forEach { item ->
             AddItem(
                 item = item,
                 currentDestination = currentDestination,
-                navController = navController
-            )
+                navController = navController,
+
+
+                )
         }
     }
 }

@@ -5,20 +5,38 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.progressSemantics
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.BottomSheetScaffold
+import androidx.compose.material.BottomSheetScaffoldState
+import androidx.compose.material.BottomSheetState
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -31,7 +49,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -42,9 +63,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.carpoint.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.NonDisposableHandle.parent
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddDivider(padding: Int) {
@@ -55,7 +81,8 @@ fun AddDivider(padding: Int) {
                 start = padding.dp,
                 end = padding.dp,
                 bottom = padding.dp
-            ).fillMaxWidth()
+            )
+            .fillMaxWidth()
     )
 }
 
@@ -119,6 +146,34 @@ fun CreateTextField(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CreateInputField(
+    @StringRes placeholderResId: Int,
+    value: String,
+    onTextChanged: (String) -> Unit
+) {
+    val gradientBorder = BorderStroke(
+        width = 2.dp,
+        brush = Brush.horizontalGradient(
+            colors = listOf(Color(0xFF1e88c1), Color(0xFF000000)),
+        )
+    )
+
+    MaterialTheme {
+        OutlinedTextField(
+            modifier = Modifier
+                .padding(10.dp)
+                .height(TextFieldDefaults.MinHeight)
+                .width(280.dp)
+                .border(gradientBorder),
+            value = value,
+            onValueChange = onTextChanged,
+            placeholder = { Text(text = stringResource(placeholderResId)) },
+            singleLine = false
+        )
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -183,7 +238,7 @@ fun CreatePasswordField(
 fun AddText(@StringRes text: Int, fontsize: Int, color: Color) {
     Text(
         text = stringResource(id = text),
-        modifier = Modifier ,
+        modifier = Modifier,
         color = color,
         style = TextStyle(fontSize = fontsize.sp)
     )
@@ -216,11 +271,61 @@ fun IndicateProgressing() {
     }
 }
 
-fun makeBorderForTextField(color: Color, color1: Color): BorderStroke {
-    return BorderStroke(
-        width = 2.dp,
-        brush = Brush.horizontalGradient(
-            colors = listOf(color, color),
+
+@Composable
+fun NoteCard(date: String, note: String) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        shape = RoundedCornerShape(8.dp),
+        border = BorderStroke(2.dp, Color(0xFF1e88c1)),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
         )
-    )
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(
+                text = date,
+                color = Color.Gray,
+                style = MaterialTheme.typography.titleSmall
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = note,
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+    }
+}
+
+@Composable
+fun SheetContent() {
+    // Your sheet content layout goes here
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+            .background(Color.White)
+    ) {
+        // Add your content inside the Box
+        Text(
+            text = "This is the sheet content",
+            modifier = Modifier.align(Alignment.Center)
+        )
+    }
+}
+
+@Composable
+fun AddFloatingActionButton(
+    onClick: () -> Unit
+) {
+    FloatingActionButton(
+        shape = RoundedCornerShape(50.dp),
+        onClick = onClick,
+    ) {
+        Icon(Icons.Default.Add, contentDescription = "Add")
+    }
 }
