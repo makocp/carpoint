@@ -1,33 +1,23 @@
-package com.example.carpoint.screens.Dashboard.HomeScreen
+package com.example.carpoint.screens.dashboard.homeScreen
 
 import android.annotation.SuppressLint
-import android.nfc.Tag
 import android.util.Log
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetValue
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Text
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.material.rememberBottomSheetState
 import androidx.compose.material.rememberScaffoldState
-
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,16 +28,13 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.carpoint.R
 import com.example.carpoint.dataBaseModels.NoteDb
 import com.example.carpoint.models.Note
 import com.example.carpoint.screens.dashboard.HomeScreen.HomeScreenViewmodel
-import com.example.carpoint.screens.logIn.LogInViewModel
 import com.example.carpoint.sharedPreferences.SharedPreferences
 import com.example.carpoint.utils.AddDivider
 import com.example.carpoint.utils.AddFloatingActionButton
@@ -60,7 +47,8 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState",
+@SuppressLint(
+    "UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState",
     "CoroutineCreationDuringComposition"
 )
 @Composable
@@ -102,12 +90,12 @@ fun HomeScreen(
                         CreateButton(R.string.submit) {
                             if (note.isNotEmpty()) {
                                 scope.launch() {
-                                    //TODO add the users ID to a Note
                                     viewModel.createNote(
                                         viewModel.getCurrentUserId(),
                                         Note(Date(), note)
                                     )
                                     note = ""
+                                    notes = viewModel.getNotes().toMutableList()
                                     sheetState.collapse()
                                 }
                             } else {
@@ -127,22 +115,20 @@ fun HomeScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     scope.launch {
-                        val fetchedNotes = viewModel.getNotes().toMutableList()
-                        notes = fetchedNotes
+                        Log.d("test", "A")
+                        notes = viewModel.getNotes().toMutableList()
                     }
                     if (notes.isEmpty()) {
-
                         AddText(text = R.string.noNotesYet, fontsize = 30, color = Color.Gray)
                     } else {
-                            LazyColumn {
-                                items(notes.size) {
-                                    notes.forEach { somethingForLater ->
-                                        NoteCard(date = somethingForLater.date, note = somethingForLater.note)
-                                    }
-                                }
+                        LazyColumn {
+                            items(notes.size) { index ->
+                                val note = notes[index]
+                                NoteCard(date = note.date, note = note.note)
                             }
-
+                        }
                     }
+
                 }
             }
         }, floatingActionButton = {
@@ -157,17 +143,4 @@ fun HomeScreen(
             }
         }
     )
-}
-
-@Preview
-@Composable
-fun ProfileView() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-    }
 }
