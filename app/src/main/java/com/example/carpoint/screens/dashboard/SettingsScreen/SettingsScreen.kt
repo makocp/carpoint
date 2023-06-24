@@ -3,18 +3,24 @@ package com.example.carpoint.screens.Dashboard.SettingsScreen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.carpoint.R
 import com.example.carpoint.screens.dashboard.SettingsScreen.SettingsViewModel
+import com.example.carpoint.utils.AddText
 import com.example.carpoint.utils.CreateButton
+import com.example.carpoint.utils.NextStepsComponent
 import kotlinx.coroutines.launch
 
 @Composable
@@ -39,6 +45,14 @@ fun SettingsScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        NextStepsComponent(
+            nextSteps = listOf(
+                "Friendslist",
+                "Allow postings and create a news feed",
+                "chat function"
+            ))
+        Spacer(modifier = Modifier.height(16.dp))
+        AddText(text = R.string.privacyandsecurity, fontsize = 20, color =Color.Black )
         CreateButton(placeholderResId = R.string.changepassword) {
             scope.launch {
                 if (email != null) {

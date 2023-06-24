@@ -26,5 +26,6 @@
     <string name="home">home</string>
     <string name="signout">log out</string>
     <string name="changepassword">change password</string>
+    <string name="privacyandsecurity">privacy and security:</string>
 
 </resources>
