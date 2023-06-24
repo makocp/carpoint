@@ -63,6 +63,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -108,7 +109,7 @@ fun CreateButton(@StringRes placeholderResId: Int, onClick: () -> Unit) {
             onClick = onClick,
             colors = ButtonDefaults.buttonColors(Color(0xFF1e88c1)),
             modifier = Modifier
-                .padding(50.dp),
+                .padding(10.dp,0.dp,0.dp,10.dp),
         ) {
             Text(text = stringResource(id = placeholderResId))
         }
@@ -327,5 +328,27 @@ fun AddFloatingActionButton(
         onClick = onClick,
     ) {
         Icon(Icons.Default.Add, contentDescription = "Add")
+    }
+}
+@Composable
+fun NextStepsComponent(
+    modifier: Modifier = Modifier,
+    nextSteps: List<String>
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = "Next Steps:",
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(bottom = 4.dp)
+        )
+        nextSteps.forEach { step ->
+            Text(
+                text = "\u2022 $step",
+                style = MaterialTheme.typography.bodyLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(bottom = 4.dp)
+            )
+        }
     }
 }
