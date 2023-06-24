@@ -1,6 +1,7 @@
 package com.example.carpoint.dataBase
 
 import com.example.carpoint.dataBaseModels.NoteDb
+import com.example.carpoint.dataBaseModels.UserDb
 import com.example.carpoint.models.Note
 import com.example.carpoint.models.User
 
@@ -36,7 +37,7 @@ interface IDatabaseHandler {
      * @param email The email address of the user to retrieve.
      * @return The user object corresponding to the provided email address.
      */
-    fun getUser(email: String): User
+    fun getUser(uid : String,callback: (UserDb) -> Unit)
     fun getUserImage(uid: String)
     fun processImageFromDataBase(base64String: String)
     fun uploadImage(uid: String, base64Image: String)

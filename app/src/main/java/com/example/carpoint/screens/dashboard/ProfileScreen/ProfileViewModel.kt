@@ -10,11 +10,14 @@ import androidx.lifecycle.ViewModel
 import com.example.carpoint.authentication.IAuthentication
 import com.example.carpoint.dataBase.IDatabaseHandler
 import com.example.carpoint.dataBaseModels.NoteDb
+import com.example.carpoint.dataBaseModels.UserDb
 import com.example.carpoint.models.Note
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
@@ -55,5 +58,12 @@ class ProfileViewModel @Inject constructor(
         return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
     }
 
-
+    suspend fun getUser(): UserDb {
+        val userId = getCurrentUserId()
+        return suspendCoroutine { continuation ->
+            database.getUser(userId) { userDb ->
+                continuation.resume(userDb)
+            }
+        }
+    }
 }

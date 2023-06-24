@@ -60,8 +60,29 @@ class IDatabaseHandlerImpl @Inject constructor(
      * @param email The email address of the user to retrieve.
      * @return The user object corresponding to the provided email address.
      */
-    override fun getUser(email: String): User {
-        TODO("Not yet implemented")
+    override fun getUser(uid : String,callback: (UserDb) -> Unit) {
+        val userRef = firebaseDatabase.getReference("users").child(uid)
+
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val dataSnapshotValue = dataSnapshot.value as? Map<String, String>
+                val id = dataSnapshot.key ?: ""
+                val name = dataSnapshotValue?.get("name") as? String ?: ""
+                val email = dataSnapshotValue?.get("email") as? String ?: ""
+                val profileImage = dataSnapshotValue?.get("profileImage") as? String ?: ""
+
+                val user = UserDb(id, name, email, profileImage)
+                if (user != null) {
+                    callback(user)
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "gettingUser: CANCELLED", databaseError.toException())
+            }
+        }
+        userRef.addValueEventListener(postListener)
+
     }
 
     override fun getUserImage(uid: String) {
@@ -71,19 +92,15 @@ class IDatabaseHandlerImpl @Inject constructor(
                 processImageFromDataBase(it.value.toString())
             }
     }
-
     override fun processImageFromDataBase(base64String: String) {
         val decodeBytes = Base64.decode(base64String, Base64.DEFAULT)
         var bitmap = BitmapFactory.decodeByteArray(decodeBytes, 0, decodeBytes.size)
     }
-
     override fun uploadImage(uid: String, base64Image: String) {
         firebaseDatabase.goOnline()
         firebaseDatabase.reference.child("users").child(uid)
             .child("profileImage").setValue(base64Image)
     }
-
-
     override fun createNote(uid: String, note: NoteDb) {
         firebaseDatabase.goOnline()
         val noteRef = firebaseDatabase.getReference("notes").child(uid)
@@ -116,7 +133,7 @@ class IDatabaseHandlerImpl @Inject constructor(
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+                Log.w(TAG, "gettingNotes:onCancelled", databaseError.toException())
             }
         }
 
