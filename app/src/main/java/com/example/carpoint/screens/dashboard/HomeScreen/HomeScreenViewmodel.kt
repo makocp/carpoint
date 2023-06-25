@@ -12,6 +12,7 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 @HiltViewModel
@@ -42,4 +43,23 @@ class HomeScreenViewmodel @Inject constructor(
             }
         }
     }
+
+    suspend fun deleteNoteAndFetchNotes(note: NoteDb) :MutableList<NoteDb>  {
+        val uid = getCurrentUserId()
+        suspendCoroutine<Unit> { continuation ->
+            data.deleteNote(uid, note.date, note.note) { success ->
+                if (success) {
+                    continuation.resume(Unit) // Resume coroutine when deletion is successful
+                } else {
+                    continuation.resumeWithException(Exception("Failed to delete note")) // Resume with an exception if deletion fails
+                }
+            }
+        }
+
+        // Deletion completed, now fetch the updated list of notes
+        val n = getNotes().toMutableList()
+        return n
+    }
+
+
 }

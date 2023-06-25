@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 /**
@@ -84,7 +85,6 @@ class IDatabaseHandlerImpl @Inject constructor(
         userRef.addValueEventListener(postListener)
 
     }
-
     override fun getUserImage(uid: String) {
         firebaseDatabase.goOnline()
         firebaseDatabase.reference.child("users").child(uid)
@@ -139,4 +139,33 @@ class IDatabaseHandlerImpl @Inject constructor(
 
         noteRef.addListenerForSingleValueEvent(postListener)
     }
+
+    override fun deleteNote(uid: String, date: String, note: String, callback: (Boolean) -> Unit) {
+        val noteRef = firebaseDatabase.getReference("notes").child(uid)
+
+        noteRef.orderByChild("note").equalTo(note).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var deletionSuccessful = false
+
+                for (noteSnapshot in dataSnapshot.children) {
+                    val noteData = noteSnapshot.value as? Map<*, *>
+                    val noteDate = noteData?.get("date") as? String
+
+                    if (noteDate == date) {
+                        noteSnapshot.ref.removeValue()
+                        deletionSuccessful = true
+                        break
+                    }
+                }
+
+                callback(deletionSuccessful) // Notify the callback about the success or failure of the deletion
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w(TAG, "deleteNote:onCancelled", databaseError.toException())
+                callback(false) // Notify the callback about the failure of the deletion
+            }
+        })
+    }
+
 }

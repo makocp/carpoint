@@ -44,4 +44,5 @@ interface IDatabaseHandler {
 
     fun createNote(uid: String,note: NoteDb)
     fun getNotes(uid : String,callback: (List<NoteDb>) -> Unit)
-}
+
+    fun deleteNote(uid: String, date: String, note: String, callback: (Boolean) -> Unit) }
