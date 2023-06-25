@@ -27,15 +27,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.carpoint.R
 import com.example.carpoint.dataBaseModels.NoteDb
 import com.example.carpoint.models.Note
 import com.example.carpoint.screens.dashboard.HomeScreen.HomeScreenViewmodel
-import com.example.carpoint.sharedPreferences.SharedPreferences
 import com.example.carpoint.utils.AddDivider
 import com.example.carpoint.utils.AddFloatingActionButton
 import com.example.carpoint.utils.AddText
