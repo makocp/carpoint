@@ -60,6 +60,11 @@ class AuthRepositoryImpl @Inject constructor(
         firebaseAuth.sendPasswordResetEmail(email)
     }
 
+    /**
+     * Retrieves the current user's ID from the authentication service.
+     *
+     * @return The current user's ID if available, or null if not authenticated.
+     */
     override fun getCurrentUserIdFromAuth(): String? {
         return firebaseAuth.currentUser?.uid
     }
