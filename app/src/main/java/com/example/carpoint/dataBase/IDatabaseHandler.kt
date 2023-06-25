@@ -32,17 +32,58 @@ interface IDatabaseHandler {
     fun deleteUser(email: String)
 
     /**
-     * Retrieves a user from the database based on the provided email address.
+     * Retrieves a user from the database based on the provided uid.
      *
-     * @param email The email address of the user to retrieve.
-     * @return The user object corresponding to the provided email address.
+     * @param uid The uid of the user to retrieve.
+     * @param callback The callback function to handle the retrieved user object.
      */
-    fun getUser(uid : String,callback: (UserDb) -> Unit)
+    fun getUser(uid: String, callback: (UserDb) -> Unit)
+
+    /**
+     * Retrieves the image of a user from the database based on the provided uid.
+     *
+     * @param uid The uid of the user to retrieve the image for.
+     */
     fun getUserImage(uid: String)
+
+    /**
+     * Processes the image retrieved from the database.
+     *
+     * @param base64String The base64 encoded string representing the image.
+     */
     fun processImageFromDataBase(base64String: String)
+
+    /**
+     * Uploads an image to the database for the specified user.
+     *
+     * @param uid The uid of the user to upload the image for.
+     * @param base64Image The base64 encoded string representing the image to upload.
+     */
     fun uploadImage(uid: String, base64Image: String)
 
-    fun createNote(uid: String,note: NoteDb)
-    fun getNotes(uid : String,callback: (List<NoteDb>) -> Unit)
+    /**
+     * Creates a new note in the database for the specified user.
+     *
+     * @param uid The uid of the user to create the note for.
+     * @param note The note object to be created.
+     */
+    fun createNote(uid: String, note: NoteDb)
 
-    fun deleteNote(uid: String, date: String, note: String, callback: (Boolean) -> Unit) }
+    /**
+     * Retrieves all notes for the specified user from the database.
+     *
+     * @param uid The uid of the user to retrieve the notes for.
+     * @param callback The callback function to handle the retrieved list of notes.
+     */
+    fun getNotes(uid: String, callback: (List<NoteDb>) -> Unit)
+
+    /**
+     * Deletes a note from the database for the specified user.
+     *
+     * @param uid The uid of the user to delete the note from.
+     * @param date The date of the note to be deleted.
+     * @param note The content of the note to be deleted.
+     * @param callback The callback function to handle the result of the delete operation.
+     */
+    fun deleteNote(uid: String, date: String, note: String, callback: (Boolean) -> Unit)
+}

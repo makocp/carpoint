@@ -33,5 +33,10 @@ interface IAuthentication {
      */
     fun sendResetPasswordMail(email: String) {}
 
+    /**
+     * Retrieves the current user's ID from the authentication service.
+     *
+     * @return The current user's ID if available, or null if not authenticated.
+     */
     fun getCurrentUserIdFromAuth(): String?
 }
