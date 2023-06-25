@@ -27,5 +27,7 @@
     <string name="signout">log out</string>
     <string name="changepassword">change password</string>
     <string name="privacyandsecurity">privacy and security:</string>
-
+    <string name="confirmLogout">are you sure you want to log out?</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
 </resources>

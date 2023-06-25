@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +23,7 @@ import com.example.carpoint.screens.dashboard.SettingsScreen.SettingsViewModel
 import com.example.carpoint.utils.AddText
 import com.example.carpoint.utils.CreateButton
 import com.example.carpoint.utils.NextStepsComponent
+import com.example.carpoint.utils.alertDialog
 import kotlinx.coroutines.launch
 
 @Composable
@@ -36,7 +39,7 @@ fun SettingsScreen(
             0
         )
     val email = loginSharedPref.getString("email", null)
-
+    var showDialog = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -45,31 +48,41 @@ fun SettingsScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        NextStepsComponent(
-            nextSteps = listOf(
-                "Friendslist",
-                "Allow postings and create a news feed",
-                "chat function"
-            ))
-        Spacer(modifier = Modifier.height(16.dp))
-        AddText(text = R.string.privacyandsecurity, fontsize = 20, color =Color.Black )
-        CreateButton(placeholderResId = R.string.changepassword) {
-            scope.launch {
-                if (email != null) {
-                    viewmodel.changePassword(email)
+        if (!showDialog.value) {
+
+            NextStepsComponent(
+                nextSteps = listOf(
+                    "Friendslist",
+                    "Allow postings and create a news feed",
+                    "chat function"
+                )
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            AddText(text = R.string.privacyandsecurity, fontsize = 20, color = Color.Black)
+            CreateButton(placeholderResId = R.string.changepassword) {
+                scope.launch {
+                    if (email != null) {
+                        viewmodel.changePassword(email)
+                    }
                 }
             }
-        }
-        CreateButton(placeholderResId = R.string.signout) {
-            with(loginSharedPref.edit()) {
-                clear()
-                apply()
+            CreateButton(placeholderResId = R.string.signout) {
+                showDialog.value = true
             }
+        }
 
-            navControllerMain.navigate("login") {
-                // Pop up to the login screen and clear the back stack
-                popUpTo("login") {
-                    inclusive = true
+        if (showDialog.value) {
+            alertDialog(showDialog = showDialog, placeholderResId = R.string.confirmLogout) {
+                with(loginSharedPref.edit()) {
+                    clear()
+                    apply()
+                }
+
+                navControllerMain.navigate("login") {
+                    // Pop up to the login screen and clear the back stack
+                    popUpTo("login") {
+                        inclusive = true
+                    }
                 }
             }
         }

@@ -8,7 +8,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,14 +20,10 @@ import androidx.compose.foundation.progressSemantics
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.BottomSheetScaffold
-import androidx.compose.material.BottomSheetScaffoldState
-import androidx.compose.material.BottomSheetState
-import androidx.compose.material.ExperimentalMaterialApi
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material3.AlertDialogDefaults.shape
+
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -49,10 +44,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -64,16 +56,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.carpoint.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.NonDisposableHandle.parent
-import kotlinx.coroutines.launch
 import androidx.compose.material.*
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.runtime.MutableState
 
 @Composable
 fun AddDivider(padding: Int) {
@@ -111,7 +99,7 @@ fun CreateButton(@StringRes placeholderResId: Int, onClick: () -> Unit) {
             onClick = onClick,
             colors = ButtonDefaults.buttonColors(Color(0xFF1e88c1)),
             modifier = Modifier
-                .padding(10.dp,0.dp,0.dp,10.dp),
+                .padding(10.dp, 0.dp, 0.dp, 10.dp),
         ) {
             Text(text = stringResource(id = placeholderResId))
         }
@@ -275,11 +263,8 @@ fun IndicateProgressing() {
 }
 
 
-
-
-
 @Composable
-fun NoteCard(date: String, note: String,onClick: () -> Unit) {
+fun NoteCard(date: String, note: String, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -350,6 +335,7 @@ fun AddFloatingActionButton(
         Icon(Icons.Default.Add, contentDescription = "Add")
     }
 }
+
 @Composable
 fun NextStepsComponent(
     modifier: Modifier = Modifier,
@@ -368,6 +354,42 @@ fun NextStepsComponent(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.padding(bottom = 4.dp)
+            )
+        }
+    }
+}
+
+
+@Composable
+fun alertDialog(
+    showDialog: MutableState<Boolean>,
+    @StringRes placeholderResId: Int,
+    onClick: () -> Unit
+) {
+    if (showDialog.value) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Gray.copy(alpha = 0.5f))
+        ) {
+            AlertDialog(
+                onDismissRequest = { showDialog.value = false },
+                text = { Text(text = stringResource(placeholderResId)) },
+                confirmButton = {
+                    CreateButton(placeholderResId = R.string.yes) {
+                        onClick()
+                        showDialog.value = false
+                    }
+                },
+                dismissButton = {
+                    Button(
+                        onClick = {
+                            showDialog.value = false
+                        }
+                    ) {
+                        Text(stringResource(R.string.no))
+                    }
+                }
             )
         }
     }
