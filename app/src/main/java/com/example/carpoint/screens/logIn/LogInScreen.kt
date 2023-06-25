@@ -128,8 +128,10 @@ fun LogInScreen(
                     navController.navigate("dashboard") {
                         launchSingleTop = true
                         with(loginSharedPref.edit()) {
-                            clear()
+                            remove("loggedIn")
                             apply()
+                            putString("username", user.name)
+                            putString("email", user.email)
                             putString("loggedIn", viewModel.getCurrentUserId())
                             apply()
                         }

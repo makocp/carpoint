@@ -144,6 +144,7 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
                             apply()
                             putString("loggedIn", viewModel.getCurrentUserId())
                             putString("email", email)
+                            putString("username", username)
                             apply()
                         }
                     }
