@@ -7,7 +7,9 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -24,6 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.carpoint.R
@@ -61,6 +65,8 @@ fun LogInScreen(
     ) {
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
+        var feedback by remember { mutableStateOf(1) }
+
         val scope = rememberCoroutineScope()
         val state = viewModel.logInState.collectAsState(initial = null)
         val context = LocalContext.current
@@ -69,6 +75,9 @@ fun LogInScreen(
 
             DisplayLogo()
             AddText(text = R.string.logIn, fontsize = 30, color = Color.Black)
+            if(feedback != 1){
+                AddText(R.string.validationNotPassed, fontsize = 12, color = Color.Red)
+            }
             CreateTextField(
                 placeholderResId = R.string.email,
                 leadingIcon = Icons.Default.Email,
@@ -88,7 +97,7 @@ fun LogInScreen(
                 { navController.navigate("resetpassword") })
 
             CreateButton(R.string.logIn) {
-                scope.launch { viewModel.loginUser(email, password) }
+                scope.launch { feedback =  viewModel.loginWithValidCredentials(email, password) }
             }
 
             AddDivider(padding = 30)

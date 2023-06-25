@@ -30,4 +30,6 @@
     <string name="confirmLogout">are you sure you want to log out?</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
+    <string name="validationNotPassed">wrong email oder password</string>
+
 </resources>
