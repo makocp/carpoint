@@ -1,16 +1,18 @@
 package com.example.carpoint.screens.logIn
 
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.carpoint.R
 import com.example.carpoint.authentication.IAuthentication
+import com.example.carpoint.dataBase.IDatabaseHandler
+import com.example.carpoint.dataBaseModels.UserDb
 import com.example.carpoint.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * ViewModel class responsible for handling login-related functionality.
@@ -19,7 +21,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class LogInViewModel @Inject constructor(
-    private val auth: IAuthentication
+    private val auth: IAuthentication,
+    private val database: IDatabaseHandler
 ) : ViewModel() {
     private val _logInState = Channel<LogInState>()
     val logInState = _logInState.receiveAsFlow()
@@ -91,6 +94,7 @@ class LogInViewModel @Inject constructor(
     private fun isValidPassword(password: String): Boolean {
         return password.length >= 8
     }
+
     /**
      * Logs in a user with the specified email and password, if the credentials are valid.
      *
@@ -104,6 +108,19 @@ class LogInViewModel @Inject constructor(
             return 1
         } else {
             return 0
+        }
+    }
+
+    suspend fun getUser(): UserDb {
+        val userId = getCurrentUserId()
+        return suspendCoroutine { continuation ->
+            database.getUser(userId) { userDb ->
+                try {
+                    continuation.resume(userDb)
+                } catch (e: IllegalStateException) {
+
+                }
+            }
         }
     }
 

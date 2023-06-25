@@ -7,9 +7,7 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -26,11 +24,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.carpoint.R
+import com.example.carpoint.dataBaseModels.UserDb
 import com.example.carpoint.screens.logIn.LogInViewModel
 import com.example.carpoint.utils.AddClickableText
 import com.example.carpoint.utils.AddDivider
@@ -66,6 +63,7 @@ fun LogInScreen(
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var feedback by remember { mutableStateOf(1) }
+        var user by remember { mutableStateOf(UserDb("","","","")) }
 
         val scope = rememberCoroutineScope()
         val state = viewModel.logInState.collectAsState(initial = null)
@@ -97,7 +95,15 @@ fun LogInScreen(
                 { navController.navigate("resetpassword") })
 
             CreateButton(R.string.logIn) {
-                scope.launch { feedback =  viewModel.loginWithValidCredentials(email, password) }
+                scope.launch {
+                    feedback =  viewModel.loginWithValidCredentials(email, password)
+                    user = viewModel.getUser()
+                    with(loginSharedPref.edit()) {
+                        putString("email", user.email)
+                        putString("username", user.name)
+                        apply()
+                    }
+                }
             }
 
             AddDivider(padding = 30)
@@ -124,7 +130,6 @@ fun LogInScreen(
                             clear()
                             apply()
                             putString("loggedIn", viewModel.getCurrentUserId())
-                            putString("email", email)
                             apply()
                         }
                     }
@@ -139,6 +144,14 @@ fun LogInScreen(
         LaunchedEffect(state.value) {
             // TODO: Loading animation, until if task finished. Or: This here gets FIRST started, bevore composition of other components. (do disable showing login screen -> directly to dashboard.)
             if (loginSharedPref.contains("loggedIn")) {
+                scope.launch {
+                    var user = viewModel.getUser()
+                    with(loginSharedPref.edit()) {
+                        putString("email", user.email)
+                        putString("username", user.name)
+                        apply()
+                    }
+                }
                 navController.navigate("dashboard")
             } else {
                 loading.value = false
