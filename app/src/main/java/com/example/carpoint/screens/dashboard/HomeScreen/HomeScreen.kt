@@ -122,7 +122,11 @@ fun HomeScreen(
                         LazyColumn {
                             items(notes.size) { index ->
                                 val note = notes[index]
-                                NoteCard(date = note.date, note = note.note)
+                                NoteCard(date = note.date, note = note.note) {
+                                    scope.launch {
+                                        notes = viewModel.deleteNoteAndFetchNotes(note)
+                                    }
+                                }
                             }
                         }
                     }

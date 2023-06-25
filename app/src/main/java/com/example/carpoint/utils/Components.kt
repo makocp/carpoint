@@ -72,6 +72,8 @@ import com.example.carpoint.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.NonDisposableHandle.parent
 import kotlinx.coroutines.launch
+import androidx.compose.material.*
+import androidx.compose.material.icons.filled.Delete
 
 @Composable
 fun AddDivider(padding: Int) {
@@ -273,8 +275,11 @@ fun IndicateProgressing() {
 }
 
 
+
+
+
 @Composable
-fun NoteCard(date: String, note: String) {
+fun NoteCard(date: String, note: String,onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -288,11 +293,25 @@ fun NoteCard(date: String, note: String) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(
-                text = date,
-                color = Color.Gray,
-                style = MaterialTheme.typography.titleSmall
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = date,
+                    color = Color.Gray,
+                    style = MaterialTheme.typography.titleSmall
+                )
+                IconButton(
+                    onClick = onClick
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete",
+                        tint = Color.Gray
+                    )
+                }
+            }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = note,
@@ -301,6 +320,7 @@ fun NoteCard(date: String, note: String) {
         }
     }
 }
+
 
 @Composable
 fun SheetContent() {
