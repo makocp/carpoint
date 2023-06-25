@@ -21,18 +21,19 @@
     <string name="addNote">Add Note</string>
     <string name="enterYourNote">enter your note</string>
     <string name="noNotesYet">No Notes Yet</string>
-    <string name="settings">settings</string>
-    <string name="profile">profile</string>
-    <string name="home">home</string>
-    <string name="signout">log out</string>
-    <string name="changepassword">change password</string>
-    <string name="privacyandsecurity">privacy and security:</string>
-    <string name="confirmLogout">are you sure you want to log out?</string>
-    <string name="yes">yes</string>
-    <string name="no">no</string>
-    <string name="validationNotPassed">wrong email oder password</string>
-    <string name="entervalidemail">please enter a valid email</string>
-    <string name="entervalidpassword">password should be min. 8 charachers long</string>
-    <string name="passwordsdontmatch">password and confirm password don\'t match</string>
+    <string name="settings">Settings</string>
+    <string name="profile">Profile</string>
+    <string name="home">Home</string>
+    <string name="signout">Log out</string>
+    <string name="changepassword">Change password</string>
+    <string name="privacyandsecurity">Privacy and security:</string>
+    <string name="confirmLogout">Are you sure you want to log out?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="validationNotPassed">Wrong email oder password</string>
+    <string name="entervalidemail">Please enter a valid email</string>
+    <string name="entervalidpassword">Password should be min. 8 charachers long</string>
+    <string name="passwordsdontmatch">Password and confirm password don\'t match</string>
+    <string name="checkyouremail">Check the link in your E-Mail!</string>
 
 </resources>
