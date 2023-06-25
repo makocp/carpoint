@@ -31,5 +31,8 @@
     <string name="yes">yes</string>
     <string name="no">no</string>
     <string name="validationNotPassed">wrong email oder password</string>
+    <string name="entervalidemail">please enter a valid email</string>
+    <string name="entervalidpassword">password should be min. 8 charachers long</string>
+    <string name="passwordsdontmatch">password and confirm password don\'t match</string>
 
 </resources>

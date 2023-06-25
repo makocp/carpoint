@@ -45,6 +45,8 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+    var feedback by remember { mutableStateOf(1) }
+
 
     // SharedPref for Login State is here created/declared.
     val loginSharedPref =
@@ -57,6 +59,9 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
         verticalArrangement = Arrangement.Center
     ) {
         AddText(text = R.string.createAccount, fontsize = 30, color = Color.Black)
+        if(feedback != 1){
+            AddText(feedback, fontsize = 12, color = Color.Red)
+        }
         CreateTextField(
             placeholderResId = R.string.email,
             leadingIcon = Icons.Default.Email,
@@ -78,11 +83,22 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
             value = confirmPassword,
             onValueChange = { confirmPassword = it })
         CreateButton(placeholderResId = R.string.createAccount) {
-            if (password.equals(confirmPassword)) {
                 scope.launch {
-                    viewModel.createAccount(email, password)
+                    if (!viewModel.isValidEmail(email)) {
+                        feedback = R.string.entervalidemail
+                    }
+                    if (password.equals(confirmPassword)) {
+                        if (!viewModel.isValidPassword(password)) {
+                            feedback = R.string.entervalidpassword
+                        }
+                    } else {
+                        feedback = R.string.passwordsdontmatch
+                    }
+                    if (viewModel.isCredentialsValid(email, password)) {
+                        viewModel.createAccount(email, password)
+                    }
                 }
-            }
+
         }
         AddDivider(padding = 30)
         Row {
