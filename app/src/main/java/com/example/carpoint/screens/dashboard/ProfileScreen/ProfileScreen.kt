@@ -1,3 +1,9 @@
+/**
+ProfileScreen.kt
+Description: Composable function for the Profile screen.
+Author: Marin Sekic
+Last Change: 25.06.2023
+ */
 package com.example.carpoint.screens.Dashboard.ProfileScreen
 
 import android.content.Intent
@@ -19,7 +25,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,19 +41,25 @@ import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.carpoint.R
-import com.example.carpoint.dataBaseModels.UserDb
 import com.example.carpoint.sharedPreferences.SharedPreferences
 import com.example.carpoint.utils.AddText
-import java.util.Date
 
 @Composable
 fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
 
     val scope = rememberCoroutineScope()
-    var user by remember {
-        mutableStateOf(UserDb("", "", "", ""))
-    }
 
+    val loginSharedPref =
+        LocalContext.current.getSharedPreferences(
+            com.example.carpoint.sharedPreferences.SharedPreferences.LOGIN_PREF.prefName,
+            0
+        )
+    val email by remember {
+        mutableStateOf(loginSharedPref.getString("email",""))
+    }
+    val username by remember {
+        mutableStateOf(loginSharedPref.getString("username",""))
+    }
 
     // Context persists in app, after restart -> different context.
     val context = LocalContext.current
@@ -84,11 +95,13 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
         onResult = {
             uriForImageDisplay = it
             // Adds the current profile image uri as base64 string to the real time database.
-            viewModel.uploadPictureToDatabase(uriForImageDisplay, context)
-            // Adds the current profile image uri to shared preferences.
-            with(profilePref.edit()) {
-                putString(profileKey1, uriForImageDisplay.toString())
-                apply()
+            if (it != null) {
+                viewModel.uploadPictureToDatabase(uriForImageDisplay, context)
+                // Adds the current profile image uri to shared preferences.
+                with(profilePref.edit()) {
+                    putString(profileKey1, uriForImageDisplay.toString())
+                    apply()
+                }
             }
         })
 
@@ -139,20 +152,17 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
         }
         Row(
             modifier = Modifier
-                .padding(0.dp,20.dp,0.dp,0.dp)
+                .padding(0.dp, 20.dp, 0.dp, 0.dp)
         ) {
             AddText(text = R.string.email, fontsize = 20, color = Color.Gray)
-            Text(text = ": " + user.email, style = TextStyle(fontSize = 20.sp))
+            Text(text = ": " + email, style = TextStyle(fontSize = 20.sp))
         }
         Row(
             modifier = Modifier
-                .padding(0.dp,20.dp,0.dp,0.dp)
-        )  {
+                .padding(0.dp, 20.dp, 0.dp, 0.dp)
+        ) {
             AddText(text = R.string.Username, fontsize = 20, color = Color.Gray)
-            Text(text = ": " + user.name, style = TextStyle(fontSize = 20.sp))
-        }
-        LaunchedEffect(Unit) {
-            user = viewModel.getUser()
+            Text(text = ": " + username, style = TextStyle(fontSize = 20.sp))
         }
     }
 }

@@ -1,8 +1,13 @@
+/**
+IDatabaseHandler.kt
+Description: Interface for handling database operations related to user data.
+Author: Mohammed Alamer
+Last Change: 25.06.2023
+ */
 package com.example.carpoint.dataBase
 
 import com.example.carpoint.dataBaseModels.NoteDb
 import com.example.carpoint.dataBaseModels.UserDb
-import com.example.carpoint.models.Note
 import com.example.carpoint.models.User
 
 /**

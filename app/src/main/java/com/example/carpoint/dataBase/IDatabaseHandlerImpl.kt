@@ -1,3 +1,9 @@
+/**
+IDatabaseHandlerImpl.kt
+Description: Implementation of the IDatabaseHandler interface using Firebase Realtime Database.
+Author: Mohammed Alamer
+Last Change: 25.06.2023
+ */
 package com.example.carpoint.dataBase
 
 import android.content.ContentValues.TAG
@@ -6,14 +12,11 @@ import android.util.Base64
 import android.util.Log
 import com.example.carpoint.dataBaseModels.NoteDb
 import com.example.carpoint.dataBaseModels.UserDb
-import com.example.carpoint.models.Note
 import com.example.carpoint.models.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 

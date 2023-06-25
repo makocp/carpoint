@@ -148,6 +148,7 @@ fun LogInScreen(
                     var user = viewModel.getUser()
                     with(loginSharedPref.edit()) {
                         putString("email", user.email)
+                        apply()
                         putString("username", user.name)
                         apply()
                     }
