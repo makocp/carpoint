@@ -1,5 +1,10 @@
 package com.example.carpoint.screens.resetPassword
-
+/**
+ForgotPasswordViewModel.kt
+Description: Viewmodel for the forgotpassword Screen.
+Author: Mohammed Alamer
+Last Change: 25.06.2023
+ */
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.carpoint.authentication.IAuthentication

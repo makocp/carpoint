@@ -1,5 +1,12 @@
 package com.example.carpoint.screens.dashboard.SettingsScreen
 
+/**
+SettingsViewModel.kt
+Description: Viewmodel for the Setting Screen.
+Author: Mohammed Alamer
+Last Change: 25.06.2023
+ */
+
 import android.provider.ContactsContract.CommonDataKinds.Email
 import androidx.lifecycle.ViewModel
 import com.example.carpoint.authentication.IAuthentication

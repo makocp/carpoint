@@ -1,3 +1,9 @@
+/**
+Car.kt
+Description: Car object.
+Author: Mohammed Alamer
+Last Change: 25.06.2023
+ */
 package com.example.carpoint.models
 
 import java.util.UUID

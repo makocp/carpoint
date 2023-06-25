@@ -1,4 +1,9 @@
 package com.example.carpoint.screens.signUp
+/**
+SignUpState.kt
+Author: Mohammed Alamer
+Last Change: 25.06.2023
+ */
 
 /**
  * Represents the state of the sign-up process.

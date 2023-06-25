@@ -1,3 +1,9 @@
+/**
+IAuthRepositoryImpl.kt
+Description: Implementation of the IAuthentication interface using Firebase authentication.
+Author: Mohammed Alamer
+Last Change: 25.06.2023
+ */
 package com.example.carpoint.authentication
 
 import com.example.carpoint.utils.Resource

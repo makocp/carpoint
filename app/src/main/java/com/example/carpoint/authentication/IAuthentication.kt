@@ -1,12 +1,16 @@
+/**
+IAuthentication.kt
+Description: Interface for authentication operations.
+Author: Mohammed Alamer
+Last Change: 25.06.2023
+ */
+
 package com.example.carpoint.authentication
 
 import com.example.carpoint.utils.Resource
 import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.flow.Flow
 
-/**
- * Interface for authentication operations.
- */
 interface IAuthentication {
     /**
      * Logs in a user with the specified email and password.

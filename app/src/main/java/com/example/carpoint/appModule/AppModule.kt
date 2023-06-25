@@ -1,3 +1,9 @@
+/**
+AppModule.kt
+Description: Dagger module responsible for providing dependencies related to the application module.
+Author: Mohammed Alamer
+Last Change: 25.06.2023
+*/
 package com.example.carpoint.appModule
 
 import com.example.carpoint.authentication.AuthRepositoryImpl
@@ -12,9 +18,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-/**
- * Dagger module responsible for providing dependencies related to the application module.
- */
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {

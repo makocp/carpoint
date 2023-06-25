@@ -1,12 +1,18 @@
+/**
+SettingsScreen.kt
+Description: Composable function for the Settings screen.
+Author: Marin Sekic
+Last Change: 25.06.2023
+ */
 package com.example.carpoint.screens.Dashboard.SettingsScreen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,8 +39,9 @@ fun SettingsScreen(
     viewmodel: SettingsViewModel = hiltViewModel()
 ) {
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
     val loginSharedPref =
-        LocalContext.current.getSharedPreferences(
+        context.getSharedPreferences(
             com.example.carpoint.sharedPreferences.SharedPreferences.LOGIN_PREF.prefName,
             0
         )
@@ -64,6 +71,7 @@ fun SettingsScreen(
                     if (email != null) {
                         viewmodel.changePassword(email)
                     }
+                    Toast.makeText(context, R.string.checkyouremail, Toast.LENGTH_SHORT).show()
                 }
             }
             CreateButton(placeholderResId = R.string.signout) {

@@ -1,4 +1,9 @@
 package com.example.carpoint
+/**
+MainActivity.kt
+Author: Mohammed Alamer
+Last Change: 25.06.2023
+ */
 
 import android.content.pm.ActivityInfo
 import android.os.Bundle

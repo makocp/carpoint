@@ -1,5 +1,9 @@
 package com.example.carpoint.screens.signUp
-
+/**
+SignUpViewModel.kt
+Author: Mohammed Alamer
+Last Change: 25.06.2023
+ */
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.carpoint.authentication.IAuthentication

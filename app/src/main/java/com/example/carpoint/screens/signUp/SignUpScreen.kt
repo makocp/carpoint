@@ -1,5 +1,9 @@
 package com.example.carpoint.screens.signUp
-
+/**
+SignUpScreen.kt
+Author: Mohammed Alamer
+Last Change: 25.06.2023
+ */
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -141,6 +145,7 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
                             apply()
                             putString("loggedIn", viewModel.getCurrentUserId())
                             putString("email", email)
+                            putString("username", username)
                             apply()
                         }
                     }
