@@ -7,7 +7,9 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -24,6 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.carpoint.R
@@ -61,69 +65,83 @@ fun LogInScreen(
     ) {
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
+        var feedback by remember { mutableStateOf(1) }
+
         val scope = rememberCoroutineScope()
         val state = viewModel.logInState.collectAsState(initial = null)
         val context = LocalContext.current
-        DisplayLogo()
-        AddText(text = R.string.logIn, fontsize = 30, color = Color.Black)
-        CreateTextField(
-            placeholderResId = R.string.email,
-            leadingIcon = Icons.Default.Email,
-            value = email,
-            onTextChanged = { email = it })
+        var loading = remember { mutableStateOf(true) }
+        if (!loading.value) {
 
-        CreatePasswordField(
-            placeholderResId = R.string.password,
-            leadingIcon = Icons.Default.Lock,
-            value = password,
-            onValueChange = { password = it })
+            DisplayLogo()
+            AddText(text = R.string.logIn, fontsize = 30, color = Color.Black)
+            if(feedback != 1){
+                AddText(R.string.validationNotPassed, fontsize = 12, color = Color.Red)
+            }
+            CreateTextField(
+                placeholderResId = R.string.email,
+                leadingIcon = Icons.Default.Email,
+                value = email,
+                onTextChanged = { email = it })
 
-        AddClickableText(
-            text = R.string.forgotPassword,
-            fontsize = 15,
-            color = Color(0xFF1e88c1),
-            { navController.navigate("resetpassword") })
+            CreatePasswordField(
+                placeholderResId = R.string.password,
+                leadingIcon = Icons.Default.Lock,
+                value = password,
+                onValueChange = { password = it })
 
-        CreateButton(R.string.logIn, {
-            scope.launch { viewModel.loginUser(email, password) }
-        })
-
-        AddDivider(padding = 30)
-
-        Row {
-            AddText(text = R.string.dontHaveAccount, fontsize = 15, Color.Gray)
             AddClickableText(
-                text = R.string.signUp,
+                text = R.string.forgotPassword,
                 fontsize = 15,
                 color = Color(0xFF1e88c1),
-                { navController.navigate("signup") })
+                { navController.navigate("resetpassword") })
 
-            if (state.value?.isLoading == true) {
-                IndicateProgressing()
+            CreateButton(R.string.logIn) {
+                scope.launch { feedback =  viewModel.loginWithValidCredentials(email, password) }
             }
-            if (state.value?.isSuccess?.isNotEmpty() == true) {
-                navController.navigate("dashboard") {
-                    // Allows only one copy of the same Screen on top of backstack.
-                    launchSingleTop = true
-                    // Put in the current User Id into Shared Preference to check later on, if logged in.
-                    // Before writing the UID to Shared Preferences, it gets cleared/all logins removed.
-                    // Gets reseted, when Shared Preferences get deleted (Application Reinstallation) or at Logout.
-                    with(loginSharedPref.edit()) {
-                        clear()
-                        apply()
-                        putString("loggedIn", viewModel.getCurrentUserId())
-                        putString("email", email)
-                        apply()
+
+            AddDivider(padding = 30)
+
+            Row {
+                AddText(text = R.string.dontHaveAccount, fontsize = 15, Color.Gray)
+                AddClickableText(
+                    text = R.string.signUp,
+                    fontsize = 15,
+                    color = Color(0xFF1e88c1),
+                    { navController.navigate("signup") })
+
+                if (state.value?.isLoading == true) {
+                    IndicateProgressing()
+                }
+                if (state.value?.isSuccess?.isNotEmpty() == true) {
+                    navController.navigate("dashboard") {
+                        // Allows only one copy of the same Screen on top of backstack.
+                        launchSingleTop = true
+                        // Put in the current User Id into Shared Preference to check later on, if logged in.
+                        // Before writing the UID to Shared Preferences, it gets cleared/all logins removed.
+                        // Gets reseted, when Shared Preferences get deleted (Application Reinstallation) or at Logout.
+                        with(loginSharedPref.edit()) {
+                            clear()
+                            apply()
+                            putString("loggedIn", viewModel.getCurrentUserId())
+                            putString("email", email)
+                            apply()
+                        }
                     }
+                } else if (state.value?.isError?.isNotEmpty() == true) {
+                    Toast.makeText(context, state.value?.isError, Toast.LENGTH_SHORT).show()
                 }
-            } else if (state.value?.isError?.isNotEmpty() == true) {
-                Toast.makeText(context, state.value?.isError, Toast.LENGTH_SHORT).show()
             }
-            LaunchedEffect(state.value) {
-                // TODO: Loading animation, until if task finished. Or: This here gets FIRST started, bevore composition of other components. (do disable showing login screen -> directly to dashboard.)
-                if (loginSharedPref.contains("loggedIn")) {
-                    navController.navigate("dashboard")
-                }
+        }else {
+            IndicateProgressing()
+        }
+
+        LaunchedEffect(state.value) {
+            // TODO: Loading animation, until if task finished. Or: This here gets FIRST started, bevore composition of other components. (do disable showing login screen -> directly to dashboard.)
+            if (loginSharedPref.contains("loggedIn")) {
+                navController.navigate("dashboard")
+            } else {
+                loading.value = false
             }
         }
     }

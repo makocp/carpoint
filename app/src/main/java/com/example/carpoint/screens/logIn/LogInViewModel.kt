@@ -1,7 +1,9 @@
 package com.example.carpoint.screens.logIn
 
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.carpoint.R
 import com.example.carpoint.authentication.IAuthentication
 import com.example.carpoint.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,11 +48,63 @@ class LogInViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Retrieves the current user ID.
+     *
+     * @return The current user ID if available, empty string otherwise.
+     */
     fun getCurrentUserId(): String {
         val userId = auth.getCurrentUserIdFromAuth()
-        if (userId != null) {
-            return userId
-        }
-        return ""
+        return userId ?: ""
     }
+
+    /**
+     * Validates the email and password.
+     *
+     * @param email The email to validate.
+     * @param password The password to validate.
+     * @return `true` if both email and password are valid, `false` otherwise.
+     */
+    private fun isCredentialsValid(email: String, password: String): Boolean {
+        val isEmailValid = isValidEmail(email)
+        val isPasswordValid = isValidPassword(password)
+        return isEmailValid && isPasswordValid
+    }
+
+    /**
+     * Validates the email format using a regular expression.
+     *
+     * @param email The email to validate.
+     * @return `true` if the email is valid, `false` otherwise.
+     */
+    private fun isValidEmail(email: String): Boolean {
+        val emailRegex = Regex("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")
+        return email.matches(emailRegex)
+    }
+
+    /**
+     * Validates the password length.
+     *
+     * @param password The password to validate.
+     * @return `true` if the password is valid, `false` otherwise.
+     */
+    private fun isValidPassword(password: String): Boolean {
+        return password.length >= 8
+    }
+    /**
+     * Logs in a user with the specified email and password, if the credentials are valid.
+     *
+     * @param email The email of the user.
+     * @param password The password of the user.
+     * @return A message indicating the result of the login attempt.
+     */
+    fun loginWithValidCredentials(email: String, password: String): Int {
+        if (isCredentialsValid(email, password)) {
+            loginUser(email, password)
+            return 1
+        } else {
+            return 0
+        }
+    }
+
 }

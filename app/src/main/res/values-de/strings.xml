@@ -31,4 +31,8 @@
     <string name="confirmLogout">willst du dich sicher abmelden?</string>
     <string name="yes">ja</string>
     <string name="no">nein</string>
+    <string name="validationNotPassed">falsches Email oder Passwort</string>
+    <string name="entervalidemail">please enter a valid email</string>
+    <string name="entervalidpassword">password should be min. 8 charachers long</string>
+    <string name="passwordsdontmatch">password and confirm password don\'t match</string>
 </resources>
