@@ -63,7 +63,6 @@ fun HomeScreen(
     var note by remember { mutableStateOf("") }
     var notes: MutableList<NoteDb> by mutableStateOf(mutableListOf())
 
-
     Scaffold(
         scaffoldState = scaffoldState,
         modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 50.dp),

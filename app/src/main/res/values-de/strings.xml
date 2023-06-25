@@ -32,7 +32,7 @@
     <string name="yes">ja</string>
     <string name="no">nein</string>
     <string name="validationNotPassed">falsches Email oder Passwort</string>
-    <string name="entervalidemail">please enter a valid email</string>
-    <string name="entervalidpassword">password should be min. 8 charachers long</string>
-    <string name="passwordsdontmatch">password and confirm password don\'t match</string>
+    <string name="entervalidemail">Bitte geben Sie ein gültiges Email an</string>
+    <string name="entervalidpassword">Passwort sollte min. 8 characters haben</string>
+    <string name="passwordsdontmatch">Passwort and Passwortbestätigung stimmen nicht überein</string>
 </resources>

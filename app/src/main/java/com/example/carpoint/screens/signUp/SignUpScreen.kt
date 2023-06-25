@@ -59,7 +59,7 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
         verticalArrangement = Arrangement.Center
     ) {
         AddText(text = R.string.createAccount, fontsize = 30, color = Color.Black)
-        if(feedback != 1){
+        if (feedback != 1) {
             AddText(feedback, fontsize = 12, color = Color.Red)
         }
         CreateTextField(
@@ -83,21 +83,22 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
             value = confirmPassword,
             onValueChange = { confirmPassword = it })
         CreateButton(placeholderResId = R.string.createAccount) {
-                scope.launch {
-                    if (!viewModel.isValidEmail(email)) {
-                        feedback = R.string.entervalidemail
-                    }
-                    if (password.equals(confirmPassword)) {
-                        if (!viewModel.isValidPassword(password)) {
-                            feedback = R.string.entervalidpassword
-                        }
-                    } else {
-                        feedback = R.string.passwordsdontmatch
-                    }
-                    if (viewModel.isCredentialsValid(email, password)) {
-                        viewModel.createAccount(email, password)
-                    }
+            scope.launch {
+                if (!viewModel.isValidEmail(email)) {
+                    feedback = R.string.entervalidemail
                 }
+                if (password.equals(confirmPassword)) {
+                    if (!viewModel.isValidPassword(password)) {
+                        feedback = R.string.entervalidpassword
+                    } else {
+                        if (viewModel.isCredentialsValid(email, password)) {
+                            viewModel.createAccount(email, password)
+                        }
+                    }
+                } else {
+                    feedback = R.string.passwordsdontmatch
+                }
+            }
 
         }
         AddDivider(padding = 30)
