@@ -1,3 +1,8 @@
+/**
+Author: Mohammed Alamer, Marin Sekic
+Last Change: 25.06.2023
+ */
+
 package com.example.carpoint.screens.dashboard.homeScreen
 
 import android.annotation.SuppressLint

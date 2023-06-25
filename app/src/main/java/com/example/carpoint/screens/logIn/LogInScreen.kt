@@ -1,5 +1,10 @@
 package com.example.carpoint.screens.LogIn
-
+/**
+LoginScreen.kt
+Description: Login Screen.
+Author: Marin Sekic & Mohammed Alamer
+Last Change: 25.06.2023
+ */
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
@@ -121,11 +126,7 @@ fun LogInScreen(
                 }
                 if (state.value?.isSuccess?.isNotEmpty() == true) {
                     navController.navigate("dashboard") {
-                        // Allows only one copy of the same Screen on top of backstack.
                         launchSingleTop = true
-                        // Put in the current User Id into Shared Preference to check later on, if logged in.
-                        // Before writing the UID to Shared Preferences, it gets cleared/all logins removed.
-                        // Gets reseted, when Shared Preferences get deleted (Application Reinstallation) or at Logout.
                         with(loginSharedPref.edit()) {
                             clear()
                             apply()
@@ -142,7 +143,6 @@ fun LogInScreen(
         }
 
         LaunchedEffect(state.value) {
-            // TODO: Loading animation, until if task finished. Or: This here gets FIRST started, bevore composition of other components. (do disable showing login screen -> directly to dashboard.)
             if (loginSharedPref.contains("loggedIn")) {
                 scope.launch {
                     var user = viewModel.getUser()

@@ -1,5 +1,10 @@
 package com.example.carpoint.screens.logIn
-
+/**
+LoginViewModel.kt
+Description: Viewmodel for the Login Screen.
+Author: Marin Sekic
+Last Change: 25.06.2023
+ */
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.carpoint.authentication.IAuthentication

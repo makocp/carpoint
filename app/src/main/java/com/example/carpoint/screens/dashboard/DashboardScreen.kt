@@ -1,4 +1,9 @@
 package com.example.carpoint.screens.dashboard
+/**
+DashboardScreen.kt
+Author: Marin Sekic
+Last Change: 25.06.2023
+ */
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -31,17 +36,6 @@ import com.example.carpoint.screens.dashboard.BottomBarNavigation.BottomNavObjec
 fun DashboardScreen(navControllerMain: NavHostController) {
     val navController = rememberNavController()
 
-    // This is the manually created list.
-//    val bottomNavObjects = listOf(
-//        BottomNavObject.Home,
-//        BottomNavObject.Profile,
-//        BottomNavObject.Settings
-//    )
-
-    /*
-    This is a dynamically created list of all subclasses of the sealed class BottomNavObject.
-    The function gets all subclasses, casts it as instances and maps it into the list.
-     */
     val bottomNavObjects = BottomNavObject::class.sealedSubclasses
         .mapNotNull { it.objectInstance }
 
@@ -91,9 +85,7 @@ fun RowScope.AddItem(
                 contentDescription = "Navigation Item",
             )
         },
-//        selected = currentDestination?.hierarchy?.any {
-//            it.route == item.route
-//        } == true,
+
         selected = currentDestination?.route == item.route,
         unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
         onClick = {

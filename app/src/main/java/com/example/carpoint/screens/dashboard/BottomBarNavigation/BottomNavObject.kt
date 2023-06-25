@@ -6,6 +6,10 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.carpoint.R
+/**
+Author: Marin Sekic
+Last Change: 25.06.2023
+ */
 
 // Sealed Class characteristics: Closed hierarchy, fixed set of (sub)classes.
 sealed class BottomNavObject(

@@ -1,6 +1,13 @@
 package com.example.carpoint.utils
 
 /**
+Resource.kt
+Author: Mohammed Alamer
+Last Change: 25.06.2023
+ */
+
+
+/**
  * A sealed class representing the different states of a resource.
  *
  * @param T The type of data associated with the resource.

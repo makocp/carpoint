@@ -1,5 +1,9 @@
 package com.example.carpoint.utils
-
+/**
+Components.kt
+Author: Mohammed Alamer
+Last Change: 25.06.2023
+ */
 import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

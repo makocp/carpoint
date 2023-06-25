@@ -1,5 +1,8 @@
 package com.example.carpoint.screens.dashboard.BottomBarNavigation
-
+/**
+Author: Marin Sekic
+Last Change: 25.06.2023
+ */
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

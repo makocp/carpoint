@@ -1,5 +1,9 @@
 package com.example.carpoint.screens.resetPassword
-
+/**
+ForgotPasswordScreen.kt
+Author: Mohammed Alamer
+Last Change: 25.06.2023
+ */
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
