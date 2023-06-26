@@ -47,3 +47,9 @@ We really liked to work with Jetpack Compose. It was a challenging task, especia
 
 Our initial plan with implementing more features like a news feed, etc. are not realised yet, because the features now already took a lot of time to implement.
 There are always things to do and we hope we fullfilled all requirements.
+
+### References
+Special thanks to our friends from youtube, they helped us a lot with this project.
+- [Philipp Lackner](https://www.youtube.com/@PhilippLackner/videos)
+- [Arfin Hosain](https://www.youtube.com/watch?v=gIuHATUBGvA&ab_channel=ArfinHosain)
+- [Stevdza-San](https://www.youtube.com/watch?v=gg-KBGH9T8s&ab_channel=Stevdza-San)
